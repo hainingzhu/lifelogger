@@ -6,7 +6,7 @@ Oauth script for Moves app.
 """
 
 
-import flask_oauthlib.client import OAuth
+from flask_oauthlib.client import OAuth
 
 
 def get_moves_oauth_credential():
@@ -26,8 +26,10 @@ def moves_oauth_server(app=None):
         consumer_key=credentials["moves_client_id"],
         consumer_secret=credentials["moves_client_secret"],
         authorize_url="https://api.moves-app.com/oauth/v1/authorize",
-        request_token_params={'scope':'activity heartrate',
-                              'expires_in': 2592000},
+        request_token_params={'scope': "activity location"},
         access_token_method="POST",
-        access_token_url="
+        access_token_url="https://api.moves-app.com/oauth/v1/access_token",
+        access_token_params={"client_id":credentials["moves_client_id"],
+                                "client_secret":credentials["moves_client_secret"]}
         )
+    return moves
