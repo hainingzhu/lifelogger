@@ -53,12 +53,12 @@ def get_moves_token(token=None):
     return session["moves_token"]
 
 
-@app.route("/moves_activity/<dateStr>")
-def get_moves_activity(dateStr):
+@app.route("/moves_places/<dateStr>")
+def get_moves_places(dateStr):
     if 'moves_user_id' not in session:
         return redirect(url_for('moves'))
     else:
-        url = "https://api.moves-app.com/api/1.1/user/summary/daily/{0}?access_token={1}".format(
+        url = "https://api.moves-app.com/api/1.1/user/places/daily/{0}?access_token={1}".format(
                 dateStr, session['moves_token'])
         print url
         return requests.get(url).content
