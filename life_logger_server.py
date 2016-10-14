@@ -11,7 +11,7 @@ Retrieve data from the following services:
 """
 
 
-from flask import Flask, session, request, url_for, redirect
+from flask import Flask, render_template, session, request, url_for, redirect
 from oauth import moves_oauth_server
 import requests
 
@@ -21,6 +21,12 @@ app.secret_key = "lifelogger"
 
 moves = moves_oauth_server(app)
 
+
+
+@app.route("/home")
+def index():
+    return render_template("index.html")
+    
 
 
 @app.route("/moves")
