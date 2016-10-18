@@ -1,0 +1,10 @@
+html, body {
+	height: 100%;
+}
+
+  
+#moves {
+	width: 100%;
+	height: 100%;
+	background-color: grey;
+}

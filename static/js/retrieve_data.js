@@ -23,14 +23,39 @@ function get_moves_places() {
 		dataType: "json"
 	}).done(function(data) {
 		moves = data[0]['segments'];
-		$("#moves").append("<ol></ol>");
-		var places = $("#moves ol");
+		var places = [];
+		var place_titles = [];
+		var center = [0, 0];	// [lat, lng]
+		
 		for (var i = 0; i < moves.length; i++) {
 			pi = moves[i];
-			li_item = ["<li>Start time: ", pi.startTime, ", end time: ", pi.endTime, ", location: (", 
-				pi.place.location.lat, ",", pi.place.location.lon, ") </li>"].join('');
-			places.append( li_item );
+			pi_lat = pi.place.location.lat;
+			pi_lon = pi.place.location.lon;
+			
+			li_item = ["Start time: ", pi.startTime, ", end time: ", pi.endTime, ", location: (", 
+				pi_lat, ",", pi_lon, ")"].join('');
+			place_titles.push(li_item)
+			console.log(li_item)
+			
+			center[0] += pi_lat;
+			center[1] += pi_lon;
+			
+			places.push( [pi_lat, pi_lon] );
 		}
-		console.log("ajax results", data[0])
+		center[0] /= places.length;
+		center[1] /= places.length;
+		var map_center = {lat: center[0], lng: center[1]};
+		var map = new google.maps.Map($('#moves')[0], {
+			zoom: 12,
+			center: map_center
+		});
+		for (var i = 0; i < places.length; i++) {
+			var position = {lat: places[i][0], lng: places[i][1]};
+			var marker = new google.maps.Marker({
+				position: position,
+				map: map,
+				title: place_titles[i]
+			});
+		}
 	});
 }
