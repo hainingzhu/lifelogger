@@ -11,15 +11,43 @@ Retrieve data from the following services:
 """
 
 
-from flask import Flask, render_template, session, request, url_for, redirect
+from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server
 import requests
+import sqlite3
 
 
 app = Flask(__name__)
 app.secret_key = "lifelogger"
 
+DATABASE = 'db/lifelogger.db'
+
 moves = moves_oauth_server(app)
+
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+    
+
+def insert_user(user, password):
+    db = get_db()
+    res = db.execute('insert into user (name, password) values ("{0}", "{1}");'.format(user, password))
+    db.commit()
+    return res
+    
+    
+def check_auth(user, password):
+    db = get_db()
+    res = db.execute('select * from user where name="{0}" and password="{1}"; '.format(user, password))
+    r = res.fetchall()
+    if len(r) == 1:
+        return True
+    else:
+        return False
+
 
 
 
@@ -62,6 +90,13 @@ def get_moves_places(dateStr):
                 dateStr, session['moves_token'])
         print url
         return requests.get(url).content
+
+@app.teardown_appcontext
+def close_db_connection(exception):
+    db = getattr(g, "_database", None)
+    if db is not None:
+        db.close()
+
 
 
 
