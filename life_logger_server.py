@@ -36,10 +36,13 @@ def get_db():
 def user_register():
     user = request.form.get("name")
     password = request.form.get("password")
-    db = get_db()
-    res = db.execute('insert into user (name, password) values ("{0}", "{1}");'.format(user, password))
-    db.commit()
-    return res
+    try:
+        db = get_db()
+        res = db.execute('insert into user (name, password) values ("{0}", "{1}");'.format(user, password))
+        db.commit()
+        return login("Register succesfully. Please login.")
+    except sqlite3.Error as er:
+        return login(er.message)
     
 
 @app.route("/check_auth", methods=['POST'])    
@@ -52,13 +55,13 @@ def check_auth():
     if len(r) == 1:
         return redirect(url_for("index"))
     else:
-        return redirect(url_for("login"))
+        return login("Wrong username or password. Please try again.")
 
 
 
 @app.route("/login")
-def login():
-    return render_template("login.html")
+def login(message=""):
+    return render_template("login.html", message=message)
 
 
 @app.route("/home")
