@@ -32,23 +32,33 @@ def get_db():
     return db
     
 
-def insert_user(user, password):
+@app.route("/user_register", methods=['POST'])
+def user_register():
+    user = request.form.get("name")
+    password = request.form.get("password")
     db = get_db()
     res = db.execute('insert into user (name, password) values ("{0}", "{1}");'.format(user, password))
     db.commit()
     return res
     
-    
-def check_auth(user, password):
+
+@app.route("/check_auth", methods=['POST'])    
+def check_auth():
+    user = request.form.get("name")
+    password = request.form.get("password")
     db = get_db()
     res = db.execute('select * from user where name="{0}" and password="{1}"; '.format(user, password))
     r = res.fetchall()
     if len(r) == 1:
-        return True
+        return redirect(url_for("index"))
     else:
-        return False
+        return redirect(url_for("login"))
 
 
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 
 @app.route("/home")
@@ -84,7 +94,7 @@ def get_moves_token(token=None):
 @app.route("/moves_places/<dateStr>")
 def get_moves_places(dateStr):
     if 'moves_user_id' not in session:
-        return redirect(url_for('moves'))
+        return redirect(url_for('/moves'))
     else:
         url = "https://api.moves-app.com/api/1.1/user/places/daily/{0}?access_token={1}".format(
                 dateStr, session['moves_token'])
