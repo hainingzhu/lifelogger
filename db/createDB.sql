@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS moves (
 	uid INTEGER REFERENCES users(userid),
 	moves_token text,
 	moves_user_id text,
-	moves_refersh_token text
+	moves_refresh_token text
 );

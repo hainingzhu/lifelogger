@@ -60,6 +60,8 @@ def check_auth():
     if len(r) == 1:
         session['uid'] = r[0][0]
         session['uname'] = user
+        # get Moves login credentials
+        moves_login()
         return redirect(url_for("index"))
     else:
         return login("Wrong username or password. Please try again.")
@@ -96,8 +98,18 @@ def index():
 @app.route("/moves")
 @requires_auth
 def moves_login():
-    print "Authentication on Moves server"
-    return moves.authorize(callback="https://98.235.161.247:9293/moves_oauth_accept")
+    # check whether current user has already registered the Moves app
+    db = get_db()
+    res = db.execute('select * from moves where uid="{0}";'.format(session['uid']))
+    r = res.fetchone()
+    session['moves_token'] = r[1]
+    session['moves_user_id'] = r[2]
+    session['moves_refresh_token'] = r[3]
+    if r is None:
+        print "Authentication on Moves server"
+        return moves.authorize(callback="https://98.235.161.247:9293/moves_oauth_accept")
+    else:
+        return " ".join([str(i) for i in r])
     
 
 @app.route("/moves_oauth_accept")
@@ -111,6 +123,11 @@ def moves_oauth_accept():
         session['moves_token'] = res['access_token']
         session['moves_user_id'] = res['user_id']
         session['moves_refresh_token'] = res['refresh_token']
+        db = get_db()
+        db.execute('insert into moves (uid, moves_token, moves_user_id, moves_refresh_token) values \
+                         ("{0}", "{1}", "{2}", "{3}");'.format(session['uid'], session['moves_token'], 
+                             session['moves_user_id'], session['moves_refresh_token']))
+        db.commit()
         return "User ID: {0}. Access token {1}".format(res['user_id'], res['access_token'])
         
 
@@ -123,12 +140,14 @@ def get_moves_token(token=None):
 @requires_auth
 def get_moves_places(dateStr):
     if 'moves_user_id' not in session:
-        return redirect(url_for('/moves'))
+        return redirect(url_for('moves_login'))
     else:
         url = "https://api.moves-app.com/api/1.1/user/places/daily/{0}?access_token={1}".format(
                 dateStr, session['moves_token'])
         print url
         return requests.get(url).content
+
+
 
 @app.teardown_appcontext
 def close_db_connection(exception):
