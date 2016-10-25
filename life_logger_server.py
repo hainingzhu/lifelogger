@@ -102,13 +102,13 @@ def moves_login():
     db = get_db()
     res = db.execute('select * from moves where uid="{0}";'.format(session['uid']))
     r = res.fetchone()
-    session['moves_token'] = r[1]
-    session['moves_user_id'] = r[2]
-    session['moves_refresh_token'] = r[3]
     if r is None:
         print "Authentication on Moves server"
         return moves.authorize(callback="https://98.235.161.247:9293/moves_oauth_accept")
     else:
+        session['moves_token'] = r[1]
+        session['moves_user_id'] = r[2]
+        session['moves_refresh_token'] = r[3]
         return " ".join([str(i) for i in r])
     
 
