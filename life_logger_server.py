@@ -12,7 +12,7 @@ Retrieve data from the following services:
 
 
 from flask import Flask, render_template, session, request, url_for, redirect, g
-from oauth import moves_oauth_server
+from oauth import moves_oauth_server, rescuetime_oauth_server
 import requests
 import sqlite3
 import ssl
@@ -27,6 +27,8 @@ app.secret_key = "lifelogger"
 
 DATABASE = 'db/lifelogger.db'
 
+
+rescuetime = rescuetime_oauth_server(app)
 moves = moves_oauth_server(app)
 
 
@@ -94,7 +96,13 @@ def index():
     return render_template("index.html")
     
 
-
+"""
+========================================
+Moves app
+1. Oauth authorization
+2. Query data
+======================================== 
+"""
 @app.route("/moves")
 @requires_auth
 def moves_login():
@@ -134,8 +142,8 @@ def moves_oauth_accept():
 @moves.tokengetter
 def get_moves_token(token=None):
     return session["moves_token"]
-
-
+        
+        
 @app.route("/moves_places/<dateStr>")
 @requires_auth
 def get_moves_places(dateStr):
@@ -146,6 +154,33 @@ def get_moves_places(dateStr):
                 dateStr, session['moves_token'])
         print url
         return requests.get(url).content
+
+
+
+
+
+"""
+========================================
+RescueTime app
+1. Oauth authorization
+2. Query data
+======================================== 
+"""
+@app.route("/rescuetime")
+def rescuetime_login():
+    return rescuetime.authorize(callback="https://98.235.161.247:9293/")
+    
+    
+@app.route("/")
+def rescuetime_oauth_accept():
+    print request
+    res = rescuetime.authorized_response()
+    if res is None:
+        return "Access denied. Error message {0}".format(request.args["error"])
+    else:
+        return '    '.join([res[i] for i in res]) # "User ID: {0}. Access token {1}".format(res['user_id'], res['access_token'])
+
+
 
 
 
