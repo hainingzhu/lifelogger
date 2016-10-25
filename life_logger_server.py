@@ -15,6 +15,11 @@ from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server
 import requests
 import sqlite3
+import ssl
+from functools import wraps
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
 
 app = Flask(__name__)
@@ -38,7 +43,7 @@ def user_register():
     password = request.form.get("password")
     try:
         db = get_db()
-        res = db.execute('insert into user (name, password) values ("{0}", "{1}");'.format(user, password))
+        res = db.execute('insert into users (name, password) values ("{0}", "{1}");'.format(user, password))
         db.commit()
         return login("Register succesfully. Please login.")
     except sqlite3.Error as er:
@@ -50,14 +55,31 @@ def check_auth():
     user = request.form.get("name")
     password = request.form.get("password")
     db = get_db()
-    res = db.execute('select * from user where name="{0}" and password="{1}"; '.format(user, password))
+    res = db.execute('select userid from users where name="{0}" and password="{1}"; '.format(user, password))
     r = res.fetchall()
     if len(r) == 1:
+        session['uid'] = r[0][0]
+        session['uname'] = user
         return redirect(url_for("index"))
     else:
         return login("Wrong username or password. Please try again.")
 
 
+def requires_auth(f):
+    """
+    My decorator for login check.
+    
+    If the session['uid'] exists, then the user is logged in.
+    Otherwise, redirect user to login page.
+    """
+    @wraps(f)
+    def wrapper(*args, **kwds):
+        if 'uid' not in session:
+            return login("You are not logged in yet. Please log in")
+        return f(*args, **kwds)
+    return wrapper
+    
+        
 
 @app.route("/login")
 def login(message=""):
@@ -65,25 +87,28 @@ def login(message=""):
 
 
 @app.route("/home")
+@requires_auth
 def index():
     return render_template("index.html")
     
 
 
 @app.route("/moves")
+@requires_auth
 def moves_login():
     print "Authentication on Moves server"
-    return moves.authorize(callback="http://98.235.161.247:9293/moves_oauth_accept")
+    return moves.authorize(callback="https://98.235.161.247:9293/moves_oauth_accept")
     
 
 @app.route("/moves_oauth_accept")
+@requires_auth
 def moves_oauth_accept():
     print request
     res = moves.authorized_response()
     if res is None:
         return "Access denied. Error message {0}".format(request.args["error"])
     else:
-        session['moves_token'] = (res['access_token'])
+        session['moves_token'] = res['access_token']
         session['moves_user_id'] = res['user_id']
         session['moves_refresh_token'] = res['refresh_token']
         return "User ID: {0}. Access token {1}".format(res['user_id'], res['access_token'])
@@ -95,6 +120,7 @@ def get_moves_token(token=None):
 
 
 @app.route("/moves_places/<dateStr>")
+@requires_auth
 def get_moves_places(dateStr):
     if 'moves_user_id' not in session:
         return redirect(url_for('/moves'))
@@ -114,4 +140,4 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8081, debug=True)
+    app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
