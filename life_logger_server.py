@@ -46,7 +46,7 @@ def user_register():
     password = request.form.get("password")
     try:
         db = get_db()
-        res = db.execute('insert into users (name, password) values ("{0}", "{1}");'.format(user, password))
+        db.execute('insert into users (name, password) values ("{0}", "{1}");'.format(user, password))
         db.commit()
         return login("Register succesfully. Please login.")
     except sqlite3.Error as er:
@@ -55,6 +55,12 @@ def user_register():
 
 @app.route("/check_auth", methods=['POST'])    
 def check_auth():
+    """
+    Authenticate the login credential.
+    
+    If valid, login user and get Oauth tokens for Moves, Rescuetime.
+    Otherwise, redirect to login page and ask user to retry.
+    """
     user = request.form.get("name")
     password = request.form.get("password")
     db = get_db()
@@ -181,11 +187,55 @@ def rescuetime_oauth_accept():
     if res is None:
         return "Access denied. Error message {0}".format(request.args["error"])
     else:
+        session['rescuetime_token'] = res['access_token']
+        db = get_db()
+        db.execute('insert into rescuetime (uid, rescuetime_token) values ("{0}", "{1}");'.format(
+                   session['uid'], session['rescuetime_token']))
+        db.commit()
         return json.dumps(res)
 
 
+@rescuetime.tokengetter
+def get_rescuetime_token(token=None):
+    return session['rescuetime_token']
 
 
+@app.route("/rescuetime_timechart")
+def rescuetime_timechart():
+    if 'rescuetime_token' not in session:
+        return redirect(url_for("rescuetime_login"))
+    else:
+        url = "https://www.rescuetime.com/api/oauth/data?access_token={0}&pv=interval&format=json".format(
+            session['rescuetime_token'])
+        print url
+        response = requests.get(url).json()
+        activities = response['rows']
+        tc = {}
+        for a in activities:
+            k = int(a[0][11:13]) # timestamp as key
+            t = a[1]    # time spent
+            p = a[5]    # productivity
+            if k not in tc:
+                tc[k] = {'productive': 0, 'distracting': 0}  # productive, distracting
+            if p > 0:
+                tc[k]['productive'] += t
+            elif p == 0:
+                tc[k]['productive'] += t / 2.0
+                tc[k]['distracting'] += t / 2.0
+            elif p < 0:
+                tc[k]['distracting'] += t
+        return str(tc)
+
+
+
+
+
+
+"""
+========================================
+Server utility, cleanup etc.
+======================================== 
+"""
 
 @app.teardown_appcontext
 def close_db_connection(exception):
