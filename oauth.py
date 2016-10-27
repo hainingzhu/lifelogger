@@ -46,9 +46,9 @@ def rescuetime_oauth_server(app=None):
         consumer_key=credentials["rescuetime_client_id"],
         consumer_secret=credentials["rescuetime_client_secret"],
         authorize_url="https://www.rescuetime.com/oauth/authorize",
-        request_token_params={'scope':'time_data'},
+        request_token_params={'scope':'time_data category_data productivity_data'},
         access_token_method="POST",
-        access_token_url="https://www.rescuetime.com/oauth/access_token",
+        access_token_url="https://www.rescuetime.com/oauth/token",
         access_token_params={"client_id":credentials["rescuetime_client_id"],
                                 "client_secret":credentials["rescuetime_client_secret"]}
         )

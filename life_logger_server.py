@@ -16,6 +16,7 @@ from oauth import moves_oauth_server, rescuetime_oauth_server
 import requests
 import sqlite3
 import ssl
+import json
 from functools import wraps
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -167,18 +168,20 @@ RescueTime app
 ======================================== 
 """
 @app.route("/rescuetime")
+@requires_auth
 def rescuetime_login():
-    return rescuetime.authorize(callback="https://98.235.161.247:9293/")
+    return rescuetime.authorize(callback="https://98.235.161.247:9293/rescuetime_oauth_accept")
     
     
-@app.route("/")
+@app.route("/rescuetime_oauth_accept")
+@requires_auth
 def rescuetime_oauth_accept():
     print request
     res = rescuetime.authorized_response()
     if res is None:
         return "Access denied. Error message {0}".format(request.args["error"])
     else:
-        return '    '.join([res[i] for i in res]) # "User ID: {0}. Access token {1}".format(res['user_id'], res['access_token'])
+        return json.dumps(res)
 
 
 
