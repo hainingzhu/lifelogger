@@ -69,7 +69,7 @@ def fitbit_oauth_server(app=None):
         access_token_method='POST',
         access_token_url='https://api.fitbit.com/oauth2/token',
         request_token_params={'scope':'activity heartrate sleep',
-                              'expires_in': 2592000},
+                              'expires_in': 31536000},
         access_token_params={'client_id':credentials['fitbit_client_id']},
         access_token_headers=authorizationHeader(credentials),
         authorize_url='https://www.fitbit.com/oauth2/authorize'

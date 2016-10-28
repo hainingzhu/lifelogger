@@ -70,8 +70,10 @@ def check_auth():
     if len(r) == 1:
         session['uid'] = r[0][0]
         session['uname'] = user
-        # get Moves login credentials
+        # get Oauth login credentials
         moves_login()
+        rescuetime_login()
+        fitbit_login()
         return redirect(url_for("index"))
     else:
         return login("Wrong username or password. Please try again.")
@@ -125,7 +127,7 @@ def moves_login():
         session['moves_token'] = r[1]
         session['moves_user_id'] = r[2]
         session['moves_refresh_token'] = r[3]
-        return " ".join([str(i) for i in r])
+        return json.dumps(r)
     
 
 @app.route("/moves_oauth_accept")
@@ -181,7 +183,14 @@ RescueTime app
 @app.route("/rescuetime")
 @requires_auth
 def rescuetime_login():
-    return rescuetime.authorize(callback="https://98.235.161.247:9293/rescuetime_oauth_accept")
+    db = get_db()
+    res = db.execute('select * from rescuetime where uid="{0}";'.format(session['uid']))
+    r = res.fetchone()
+    if r is None:
+        return rescuetime.authorize(callback="https://98.235.161.247:9293/rescuetime_oauth_accept")
+    else:
+        session['rescuetime_token'] = r[1]
+        return json.dumps(r)
     
     
 @app.route("/rescuetime_oauth_accept")
@@ -244,7 +253,17 @@ Fitbit app
 @app.route("/fitbit")
 @requires_auth
 def fitbit_login():
-    return fitbit.authorize(callback="https://98.235.161.247:9293/fitbit_oauth_accept")
+    # check whether current user has already registered the Fitbit API
+    db = get_db()
+    res = db.execute('select * from fitbit where uid="{0}";'.format(session['uid']))
+    r = res.fetchone()
+    if r is None:
+        return fitbit.authorize(callback="https://98.235.161.247:9293/fitbit_oauth_accept")
+    else:
+        session["fitbit_token"] = r[1]
+        session["fitbit_user_id"] = r[2]
+        session["fitbit_refresh_token"] = r[3]
+        return json.dumps(r)
 
 
 @app.route("/fitbit_oauth_accept")
@@ -256,9 +275,31 @@ def fitbit_oauth_accept():
     else:
         session["fitbit_token"] = res["access_token"]
         session["fitbit_user_id"] = res["user_id"]
+        db = get_db()
+        db.execute('insert into fitbit (uid, fitbit_token, fitbit_user_id, \
+                fitbit_refresh_token) values ("{0}", "{1}", "{2}", "{3}");'.format(
+                    session['uid'], res['access_token'], res['user_id'], res['refresh_token']))
+        db.commit()
         return json.dumps(res)
         
 
+@app.route("/fitbit_activity/<dateStr>")
+def get_user_activity(dateStr):
+    """
+    Get user activities.
+    
+    User id is stored in the session variable.
+    date is a string with format 'yyyy-MM-dd'
+    """
+    if 'fitbit_token' not in session:
+        return redirect(url_for("fitbit_login"))
+    else:
+        url = "https://api.fitbit.com/1/user/{0}/activities/date/{1}.json".format(
+            session['fitbit_user_id'], dateStr)
+        header = {"Authorization":"Bearer {0}".format(session['fitbit_token'])}
+        return requests.get(url, headers=header).content
+        
+        
 @fitbit.tokengetter
 def get_fitbit_token(token=None):
     return session.get('fitbit_token')
