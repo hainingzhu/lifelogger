@@ -12,7 +12,7 @@ Retrieve data from the following services:
 
 
 from flask import Flask, render_template, session, request, url_for, redirect, g
-from oauth import moves_oauth_server, rescuetime_oauth_server
+from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server
 import requests
 import sqlite3
 import ssl
@@ -31,6 +31,7 @@ DATABASE = 'db/lifelogger.db'
 
 rescuetime = rescuetime_oauth_server(app)
 moves = moves_oauth_server(app)
+fitbit = fitbit_oauth_server(app)
 
 
 def get_db():
@@ -154,6 +155,10 @@ def get_moves_token(token=None):
 @app.route("/moves_places/<dateStr>")
 @requires_auth
 def get_moves_places(dateStr):
+    """
+    The dateStr format is yyyyMMdd.
+    If only pass yyyyMM, then monthly summary is provided.
+    """
     if 'moves_user_id' not in session:
         return redirect(url_for('moves_login'))
     else:
@@ -229,7 +234,37 @@ def rescuetime_timechart():
 
 
 
+"""
+========================================
+Fitbit app
+1. Oauth authorization
+2. Query data
+======================================== 
+"""
+@app.route("/fitbit")
+@requires_auth
+def fitbit_login():
+    return fitbit.authorize(callback="https://98.235.161.247:9293/fitbit_oauth_accept")
 
+
+@app.route("/fitbit_oauth_accept")
+@requires_auth
+def fitbit_oauth_accept():
+    res = fitbit.authorized_response()
+    if res is None:
+        return "Access denied. reason: {0}".format(request.args['errors'])
+    else:
+        session["fitbit_token"] = res["access_token"]
+        session["fitbit_user_id"] = res["user_id"]
+        return json.dumps(res)
+        
+
+@fitbit.tokengetter
+def get_fitbit_token(token=None):
+    return session.get('fitbit_token')
+    
+    
+    
 
 """
 ========================================

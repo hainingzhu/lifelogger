@@ -7,6 +7,7 @@ Oauth script for Moves app.
 
 
 from flask_oauthlib.client import OAuth
+from base64 import b64encode
 
 
 def get_oauth_credential():
@@ -16,6 +17,8 @@ def get_oauth_credential():
         credentials["moves_client_secret"] = fin.readline().strip()
         credentials["rescuetime_client_id"] = fin.readline().strip()
         credentials["rescuetime_client_secret"] = fin.readline().strip()
+        credentials["fitbit_client_id"] = fin.readline().strip()
+        credentials["fitbit_client_secret"] = fin.readline().strip()
     return credentials
     
     
@@ -53,3 +56,31 @@ def rescuetime_oauth_server(app=None):
                                 "client_secret":credentials["rescuetime_client_secret"]}
         )
     return rescuetime
+    
+
+def fitbit_oauth_server(app=None):
+    credentials = get_oauth_credential()
+    
+    oauth = OAuth(app)
+    fitbit = oauth.remote_app(
+        name='fitbit',
+        consumer_key=credentials['fitbit_client_id'],
+        consumer_secret=credentials['fitbit_client_secret'],
+        access_token_method='POST',
+        access_token_url='https://api.fitbit.com/oauth2/token',
+        request_token_params={'scope':'activity heartrate sleep',
+                              'expires_in': 2592000},
+        access_token_params={'client_id':credentials['fitbit_client_id']},
+        access_token_headers=authorizationHeader(credentials),
+        authorize_url='https://www.fitbit.com/oauth2/authorize'
+    )
+    return fitbit
+    
+    
+def authorizationHeader(credentials):
+    """
+    Fitbit Oauth API needs this extra tweak
+    """
+    auth_val = 'Basic '+ \
+            b64encode("{0}:{1}".format(credentials['fitbit_client_id'], credentials['fitbit_client_secret']))
+    return {'Authorization': auth_val}
