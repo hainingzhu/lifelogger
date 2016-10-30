@@ -1,9 +1,11 @@
 var moves;
+var rescuetime;
 
 $('document').ready(function(){
 	// setup the date time picker.
     $( "#datepicker" ).datepicker();
 	get_moves_places();
+	get_rescutime_timechart();
 });
 
 
@@ -64,5 +66,64 @@ function get_moves_places() {
                 });
             }
         }
+	});
+}
+
+
+function get_rescutime_timechart() {
+	$.ajax({
+		url: "/rescuetime_timechart",
+		dataType: "json"
+	}).done(function(data) {
+		rescuetime = data;
+		productivePoints = [];
+		distractingPoints = [];
+		for (var i = 0; i < data.length; i++) {
+			productivePoints[i] = {
+				y: data[i]['productive'], 
+				label: i + ":00"
+			};
+			distractingPoints[i] = {
+				y: data[i]['distracting'],
+				label: i + ":00"
+			};
+		}
+		// barplot with CanvasJS
+		var chart = new CanvasJS.Chart("rescuetime", {
+			title: {
+				text: "RescueTime -- Productivity"
+			},
+			legend: {
+				horizontalAlign: "right",
+				verticalAlign: "top"
+			},
+			axisX: {
+				title: "Time by Hour",
+				minimum: 0,
+				maximum: 23,
+				interval: 1,
+				reversed: true
+			},
+			axisY: {
+				title: "Duration (minutes)",
+				minimum: 0,
+				maximum: 60
+			},
+			data: [
+			{
+				type: "bar",
+				showInLegend: true,
+				legendText: "Productive time",
+				dataPoints: productivePoints
+			},
+			{
+				type: "bar",
+				showInLegend: true,
+				legendText: "Distracting time",
+				dataPoints: distractingPoints
+			}
+			]
+		});
+		chart.render();
 	});
 }

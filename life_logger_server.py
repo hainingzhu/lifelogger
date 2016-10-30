@@ -224,13 +224,13 @@ def rescuetime_timechart():
         print url
         response = requests.get(url).json()
         activities = response['rows']
-        tc = {}
+        tc = [{}] * 24
+        for i in range(len(tc)):
+            tc[i] = {'productive': 0, 'distracting': 0}
         for a in activities:
             k = int(a[0][11:13]) # timestamp as key
-            t = a[1]    # time spent
+            t = a[1] / 60.0   # time spent in minutes
             p = a[5]    # productivity
-            if k not in tc:
-                tc[k] = {'productive': 0, 'distracting': 0}  # productive, distracting
             if p > 0:
                 tc[k]['productive'] += t
             elif p == 0:
@@ -238,7 +238,7 @@ def rescuetime_timechart():
                 tc[k]['distracting'] += t / 2.0
             elif p < 0:
                 tc[k]['distracting'] += t
-        return str(tc)
+        return json.dumps(tc)
 
 
 

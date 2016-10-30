@@ -3,8 +3,21 @@ html, body {
 }
 
   
-#moves {
+#app {
+	height: 100%;
 	width: 100%;
+}
+  
+#moves {
+	width: 50%;
 	height: 100%;
 	background-color: grey;
+	float: left;
+}
+
+
+#rescuetime {
+	height: 100%; 
+	width: 30%;
+	float: left
 }
