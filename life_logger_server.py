@@ -294,7 +294,7 @@ def get_user_activity(dateStr):
     if 'fitbit_token' not in session:
         return redirect(url_for("fitbit_login"))
     else:
-        url = "https://api.fitbit.com/1/user/{0}/activities/date/{1}.json".format(
+        url = "https://api.fitbit.com/1/user/{0}/activities/steps/date/{1}/1d.json".format(
             session['fitbit_user_id'], dateStr)
         header = {"Authorization":"Bearer {0}".format(session['fitbit_token'])}
         return requests.get(url, headers=header).content

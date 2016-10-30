@@ -53,7 +53,8 @@ def rescuetime_oauth_server(app=None):
         access_token_method="POST",
         access_token_url="https://www.rescuetime.com/oauth/token",
         access_token_params={"client_id":credentials["rescuetime_client_id"],
-                                "client_secret":credentials["rescuetime_client_secret"]}
+                             "client_secret":credentials["rescuetime_client_secret"],
+                                "expires_in": 31557600 }
         )
     return rescuetime
     
