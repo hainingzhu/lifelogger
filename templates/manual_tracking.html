@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Life Logger Manual Tracking Survey</title>
+  </head>
+  <body>
+    {{ message }}
+    <div class="container">
+  <h1>[Term Definition]</h1>
+  <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
+  
+  <ul>
+    <li><em><u>Work</u></em>: Academic related activities, study, job hunting, interviews, taking classes, homework, group discussions/work/projects, etc.</li> 
+    <li><em><u>Leisure</u></em>: social life, shopping, watching videos/playing games, partying, drinking, club activities, sports, etc.</li>
+    <li><em><u>Personal maintenance</u></em>: health, showering, cooking, eating, sleep, working out, transportation, etc.</li>
+  </ul>
+  
+  <div id="table" class="table-editable">
+    <span class="table-add glyphicon glyphicon-plus"></span>
+    <table class="table">
+    <table border=”1″ style=”width:300px”>
+      <tr>
+        <th>What happened?</th>
+        <th>Code</th>
+        <th>Time began</th>
+        <th>Time ended</th>
+        <th>Where?</th>
+        <th>What did you feel?</th>
+        <th>Stress</th>
+      </tr>
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 1-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <button id="export-btn" class="btn btn-primary">Add Row</button>
+  <p id="export"></p>
+</div>
+  </body>
+</html>
