@@ -12,7 +12,7 @@ Retrieve data from the following services:
 
 
 from flask import Flask, render_template, session, request, url_for, redirect, g
-from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server
+from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server, authorizationHeader
 import requests
 import sqlite3
 import ssl
@@ -297,13 +297,32 @@ def get_user_activity(dateStr):
         url = "https://api.fitbit.com/1/user/{0}/activities/steps/date/{1}/1d.json".format(
             session['fitbit_user_id'], dateStr)
         header = {"Authorization":"Bearer {0}".format(session['fitbit_token'])}
-        return requests.get(url, headers=header).content
+        res = requests.get(url, headers=header).content
+        print res
+        resObj = json.loads(res)
+        if resObj.get('errors')[0].get('errorType') == 'expired_token':
+            refresh_fitbit_token()
+            return get_user_activity(dateStr)
+        else:
+            print "no error"
+            return res
         
         
 @fitbit.tokengetter
 def get_fitbit_token(token=None):
+    print "call fitbit tokengetter", session.get('fitbit_token')
     return session.get('fitbit_token')
     
+    
+def refresh_fitbit_token():
+    refresh_request_data = {'grant_type': 'refresh_token',
+                            'refresh_token': '37deaa522d6ea1b5a9010aa6383141013b13ef136be527ac2c4a15d15dba0a87', #session['fitbit_refresh_token'],
+                            'expires_in': 28800
+                            }
+    header = authorizationHeader()
+    resp = requests.post(fitbit.access_token_url, data=refresh_request_data, headers=header)
+    print resp
+    return resp
     
     
 

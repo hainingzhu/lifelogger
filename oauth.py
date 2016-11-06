@@ -21,9 +21,11 @@ def get_oauth_credential():
         credentials["fitbit_client_secret"] = fin.readline().strip()
     return credentials
     
+
+credentials = get_oauth_credential()
     
+
 def moves_oauth_server(app=None):
-    credentials = get_oauth_credential()
     
     oauth = OAuth(app)
     moves = oauth.remote_app(
@@ -41,7 +43,6 @@ def moves_oauth_server(app=None):
 
     
 def rescuetime_oauth_server(app=None):
-    credentials = get_oauth_credential()
     
     oauth = OAuth(app)
     rescuetime = oauth.remote_app(
@@ -60,7 +61,6 @@ def rescuetime_oauth_server(app=None):
     
 
 def fitbit_oauth_server(app=None):
-    credentials = get_oauth_credential()
     
     oauth = OAuth(app)
     fitbit = oauth.remote_app(
@@ -72,13 +72,13 @@ def fitbit_oauth_server(app=None):
         request_token_params={'scope':'activity heartrate sleep',
                               'expires_in': 31536000},
         access_token_params={'client_id':credentials['fitbit_client_id']},
-        access_token_headers=authorizationHeader(credentials),
+        access_token_headers=authorizationHeader(),
         authorize_url='https://www.fitbit.com/oauth2/authorize'
     )
     return fitbit
     
     
-def authorizationHeader(credentials):
+def authorizationHeader():
     """
     Fitbit Oauth API needs this extra tweak
     """
