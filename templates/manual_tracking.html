@@ -3,15 +3,26 @@
     <title>Life Logger Manual Tracking Survey</title>
   </head>
   <body>
-    {{ message }}
+    <!-- {{ message }} -->
     <div class="container">
-  <h1>[Term Definition]</h1>
+
+  <h2>[Instruction]</h2>
+  <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
+  
+  <ul>
+    <li>Please fill in the blank <em><u>“What happened”</u></em> with short descriptions to specify activities.</li> 
+    <li>Please fill in the blank <em><u>“Code”</u></em> with <em><u>1 work, 2 Leisure, 3 Personal maintenance.</u></em></li>
+  </ul>
+
+  <h2>[Term Definition]</h2>
   <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
   
   <ul>
     <li><em><u>Work</u></em>: Academic related activities, study, job hunting, interviews, taking classes, homework, group discussions/work/projects, etc.</li> 
     <li><em><u>Leisure</u></em>: social life, shopping, watching videos/playing games, partying, drinking, club activities, sports, etc.</li>
     <li><em><u>Personal maintenance</u></em>: health, showering, cooking, eating, sleep, working out, transportation, etc.</li>
+    <li>Code for <em><u>feeling</u></em>: <em><u>1. Very unhappy, 2. Unhappy, 3. Happy, 4. Very happy</u></em></li>
+    <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
   </ul>
   
   <div id="table" class="table-editable">
@@ -46,7 +57,13 @@
                 <option value="Happy">Happy</option>
                 <option value="Very Happy">Very Happy</option>
         </select>
-        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
         </td>   
           <span class="table-remove glyphicon glyphicon-remove"></span>
         </td>
@@ -74,7 +91,319 @@
                 <option value="Happy">Happy</option>
                 <option value="Very Happy">Very Happy</option>
         </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 2-->
+      <tr>
         <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 3-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 4-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 5-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 6-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 7-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 8-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 9-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line 10-->
+      <tr>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Work">Work</option>
+                <option value="Leisure">Leisure</option>
+                <option value="Personal maintenance">Personal maintenance</option>
+        </select>
+        <td contenteditable="true"></td>
+        </td>   
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td class = "select"> 
+        <select>        
+                <option value="Very Unhappy">Very Unhappy</option>
+                <option value="Unhappy">Unhappy</option>
+                <option value="Happy">Happy</option>
+                <option value="Very Happy">Very Happy</option>
+        </select>
+        <td class = "select"> 
+        <select>        
+                <option value="Very relaxed">Very relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very stressed">Very stressed</option>
+        </select>
         </td>   
           <span class="table-remove glyphicon glyphicon-remove"></span>
         </td>
@@ -84,8 +413,39 @@
       </tr>
     </table>
   </div>
-  
+
   <button id="export-btn" class="btn btn-primary">Add Row</button>
+
+  <P>1. Can you guess how many steps did you walk today?<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 3000 steps">Below 3000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 7000 steps">Below 7000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 10000 steps">Below 10000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="I don’t know">I don’t know<BR>
+  </p>
+
+  <p>2. How many alcoholic beverages did you drink today?<BR>
+    <input type="text" id="text" name="text_name" <BR>
+  </p>
+
+  <p>3. How many cigarettes did you smoke today?<BR>
+    <input type="text" id="text" name="text_name" <BR>
+  </p>
+
+  <P>4. How would you rate your sleep quality last night?<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very good">Very good<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly good">Fairly good<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly bad">Fairly bad<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very bad">Very bad<BR>
+  </p>
+
+  <p>5. What percentage of the time did you:<BR>
+    <li>Spend on academic work <input type="text" id="text" name="text_name" <BR> % </li> 
+    <li>Spend on leisure/social life activities <input type="text" id="text" name="text_name" <BR> % </li>
+    <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
+    <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
+  </p>
+  
+  
   <p id="export"></p>
 </div>
   </body>
