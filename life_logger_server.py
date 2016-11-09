@@ -297,15 +297,14 @@ def get_user_activity(dateStr):
         url = "https://api.fitbit.com/1/user/{0}/activities/steps/date/{1}/1d.json".format(
             session['fitbit_user_id'], dateStr)
         header = {"Authorization":"Bearer {0}".format(session['fitbit_token'])}
-        res = requests.get(url, headers=header).content
-        print res
-        resObj = json.loads(res)
-        if resObj.get('errors')[0].get('errorType') == 'expired_token':
+        res = requests.get(url, headers=header)
+        resObj = json.loads(res.content)
+        if resObj.get('errors') and resObj.get('errors')[0].get('errorType') == 'expired_token':
             refresh_fitbit_token()
             return get_user_activity(dateStr)
         else:
             print "no error"
-            return res
+            return res.content
         
         
 @fitbit.tokengetter
