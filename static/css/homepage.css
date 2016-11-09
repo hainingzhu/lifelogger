@@ -19,5 +19,16 @@ html, body {
 #rescuetime {
 	height: 100%; 
 	width: 30%;
-	float: left
+	float: left;
+}
+
+#data {
+	width: 50%;
+	float: left;
+	height: 100%;
+}
+
+#survey {
+	width: 50%;
+	float: left;
 }

@@ -13,14 +13,449 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL-i8Ridf0tibzpzu-YsPR13sLIg5QbHA"></script>
 </head>
 <body>
+<div id=data>
+	<div id=date>
+		Date: <div id="datepicker"></div>
+	</div>
 
-<div id=date>
-	Date: <div id="datepicker"></div>
+	<div id=app>
+		<div id=rescuetime></div>
+		<div id=moves></div>
+	</div>
 </div>
 
-<div id=app>
-	<div id=rescuetime></div>
-	<div id=moves></div>
+<div id=survey>
+
+  <h2>[Instruction]</h2>
+  <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
+  
+  <ul>
+    <li>Please fill in the blank <em><u>“What happened”</u></em> with short descriptions to specify activities.</li> 
+    <li>Please fill in the blank <em><u>“Code”</u></em> with <em><u>1 work, 2 Leisure, 3 Personal maintenance.</u></em></li>
+  </ul>
+
+  <h2>[Term Definition]</h2>
+  <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
+  
+  <ul>
+    <li><em><u>Work</u></em>: Academic related activities, study, job hunting, interviews, taking classes, homework, group discussions/work/projects, etc.</li> 
+    <li><em><u>Leisure</u></em>: social life, shopping, watching videos/playing games, partying, drinking, club activities, sports, etc.</li>
+    <li><em><u>Personal maintenance</u></em>: health, showering, cooking, eating, sleep, working out, transportation, etc.</li>
+    <li>Code for <em><u>feeling</u></em>: <em><u>1. Very unhappy, 2. Unhappy, 3. Happy, 4. Very happy</u></em></li>
+    <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
+  </ul>
+  
+  <div id="table">
+<!--     <span class="table-add glyphicon glyphicon-plus"></span>
+    <table class="table"> -->
+    <!-- <table id="table" border=”1″ style=”width:300px”> -->
+    <TABLE id="dataTable" width="350px" border="1">
+      <tr>
+        <th>What happened?</th>
+        <th>Code</th>
+        <th>Time began</th>
+        <th>Time ended</th>
+        <th>Where?</th>
+        <th>What did you feel?</th>
+        <th>Stress</th>
+      </tr>
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- repeat row 1 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+       <!-- repeat row 2 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 3 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 4 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 5 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 6 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+       <!-- repeat row 7 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 8 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 9 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <TD><INPUT type="text" name="txt"/></TD>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+
+      
+    </table>
+  </div>
+
+  <!-- <button id="export-btn" class="btn btn-primary">Add Row</button> -->
+  <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+
+  <P>1. Can you guess how many steps did you walk today?<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 3000 steps">Below 3000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 7000 steps">Below 7000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 10000 steps">Below 10000 steps<BR>
+    <input type="radio" name="1.Can you guess how many steps did you walk today" value="I don’t know">I don’t know<BR>
+  </p>
+
+  <p>2. How many alcoholic beverages did you drink today?<BR>
+    <input type="text" id="text" name="text_name" <BR>
+  </p>
+
+  <p>3. How many cigarettes did you smoke today?<BR>
+    <input type="text" id="text" name="text_name" <BR>
+  </p>
+
+  <P>4. How would you rate your sleep quality last night?<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very good">Very good<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly good">Fairly good<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly bad">Fairly bad<BR>
+    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very bad">Very bad<BR>
+  </p>
+
+  <p>5. What percentage of the time did you:<BR>
+    <li>Spend on academic work <input type="text" id="text" name="text_name" <BR> % </li> 
+    <li>Spend on leisure/social life activities <input type="text" id="text" name="text_name" <BR> % </li>
+    <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
+    <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
+  </p>
+  
+  
+  <p id="export"></p>
 </div>
  
 </body>
