@@ -1,16 +1,21 @@
 var moves;
 var rescuetime;
+var fitbit;
 
 $('document').ready(function(){
 	// setup the date time picker.
     $( "#datepicker" ).datepicker();
 	get_moves_places();
 	get_rescutime_timechart();
+	get_fitbit_timechart();
 });
 
-
-
-function get_moves_places() {
+/*
+Return the current date as delimiter separated string.
+If delimiter is '', return YYYYMMDD, used in Moves API.
+If delimiter is '-', return YYYY-MM-DD, used in Fitbit API.
+*/
+function getDate(delimiter) {
 	var d = new Date();
 	var y = d.getFullYear();
 	var mm = (d.getMonth() + 1).toString();
@@ -19,7 +24,13 @@ function get_moves_places() {
 	var dd = d.getDate().toString();
 	if (dd.length == 1)
 		dd = '0' + dd
-	dateStr = [y, mm, dd].join('');
+	dateStr = [y, mm, dd].join(delimiter);
+	return dateStr;
+}
+
+
+function get_moves_places() {
+	var dateStr = getDate("");
 	$.ajax({
 		url: "/moves_places/" + dateStr,
 		dataType: "json"
@@ -94,7 +105,7 @@ function get_rescutime_timechart() {
 				text: "RescueTime -- Productivity"
 			},
 			legend: {
-				horizontalAlign: "right",
+				horizontalAlign: "center",
 				verticalAlign: "top"
 			},
 			axisX: {
@@ -129,6 +140,61 @@ function get_rescutime_timechart() {
 }
 
 
+function get_fitbit_timechart() {
+	var dateStr = getDate('-');
+	$.ajax({
+		url: "/fitbit_activity/" + dateStr,
+		dataType: "json"
+	}).done(function(data) {
+		fitbit = data;
+		var steps = fitbit[0];
+		var ts = fitbit[1];
+		var intraday_steps = [];
+		for (var i = 0; i < ts.length; i++) {
+			intraday_steps[i] = {
+				y: ts[i],
+				label: i+":00"
+			};
+		}
+		// barplot with CanvasJS
+		var chart = new CanvasJS.Chart("fitbit", {
+			title: {
+				text: "Fitbit -- Intra-day Steps"
+			},
+			legend: {
+				horizontalAlign: "center",
+				verticalAlign: "top"
+			},
+			axisX: {
+				title: "Time by Hour",
+				minimum: 0,
+				maximum: 23,
+				interval: 1,
+				reversed: true
+			},
+			axisY: {
+				title: 'Steps',
+				minimum: 0,
+				maximum: (Math.floor(Math.max.apply(null, ts)/100) + 1) * 100
+			},
+			data: [
+			{
+				type: "bar",
+				showInLegend: true,
+				legendText: "Steps",
+				dataPoints: intraday_steps
+			}
+			]
+		});
+		chart.render();
+	});
+}
+
+
+
+/*
+Add row for the manually input survey
+*/
 function addRow(tableID) {
 
   var table = document.getElementById(tableID);

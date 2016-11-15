@@ -15,10 +15,15 @@ html, body {
 	float: left;
 }
 
+#fitbit {
+	width: 25%;
+	height: 100%;
+	float: left;
+}
 
 #rescuetime {
 	height: 100%; 
-	width: 30%;
+	width: 25%;
 	float: left;
 }
 

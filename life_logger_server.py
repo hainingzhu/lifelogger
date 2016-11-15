@@ -304,7 +304,14 @@ def get_user_activity(dateStr):
             refresh_fitbit_token()
             return get_user_activity(dateStr)
         else:
-            return res.content
+            # generate hourly time series from resObj
+            steps = int(resObj['activities-steps'][0]['value'])
+            intraday = resObj['activities-steps-intraday']['dataset']
+            ts = [0] * 24
+            for t in intraday:
+                h = int(t['time'][0:2])
+                ts[h] += t['value']
+            return json.dumps([steps, ts])
         
         
 @fitbit.tokengetter
