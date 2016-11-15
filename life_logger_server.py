@@ -275,6 +275,7 @@ def fitbit_oauth_accept():
     else:
         session["fitbit_token"] = res["access_token"]
         session["fitbit_user_id"] = res["user_id"]
+        session["fitbit_refresh_token"] = res["refresh_token"]
         db = get_db()
         db.execute('insert into fitbit (uid, fitbit_token, fitbit_user_id, \
                 fitbit_refresh_token) values ("{0}", "{1}", "{2}", "{3}");'.format(
@@ -294,7 +295,7 @@ def get_user_activity(dateStr):
     if 'fitbit_token' not in session:
         return redirect(url_for("fitbit_login"))
     else:
-        url = "https://api.fitbit.com/1/user/{0}/activities/steps/date/{1}/1d.json".format(
+        url = "https://api.fitbit.com/1/user/{0}/activities/steps/date/{1}/1d/15min.json".format(
             session['fitbit_user_id'], dateStr)
         header = {"Authorization":"Bearer {0}".format(session['fitbit_token'])}
         res = requests.get(url, headers=header)
@@ -303,7 +304,6 @@ def get_user_activity(dateStr):
             refresh_fitbit_token()
             return get_user_activity(dateStr)
         else:
-            print "no error"
             return res.content
         
         
@@ -314,13 +314,22 @@ def get_fitbit_token(token=None):
     
     
 def refresh_fitbit_token():
+    print "refresh_fitbit_token"
     refresh_request_data = {'grant_type': 'refresh_token',
-                            'refresh_token': '37deaa522d6ea1b5a9010aa6383141013b13ef136be527ac2c4a15d15dba0a87', #session['fitbit_refresh_token'],
+                            'refresh_token': session['fitbit_refresh_token'],
                             'expires_in': 28800
                             }
     header = authorizationHeader()
     resp = requests.post(fitbit.access_token_url, data=refresh_request_data, headers=header)
-    print resp
+    r = resp.json()
+    session['fitbit_token'] = r['access_token']
+    session['fitbit_user_id'] = r['user_id']
+    session['fitbit_refresh_token'] = r['refresh_token']
+    # update fitbit credentials in local DB
+    db = get_db()
+    db.execute('update fitbit set fitbit_token="{0}", fitbit_user_id="{1}", fitbit_refresh_token="{2}" where uid="{3}";'.format(
+               r['access_token'], r['user_id'], r['refresh_token'], session['uid']))
+    db.commit()
     return resp
     
     
