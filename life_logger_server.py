@@ -224,7 +224,9 @@ def rescuetime_timechart():
         print url
         response = requests.get(url).json()
         activities = response['rows']
-        tc = [{}] * 24
+        tc = [{}] * 25
+        sumProd = 0
+        sumDist = 0
         for i in range(len(tc)):
             tc[i] = {'productive': 0, 'distracting': 0}
         for a in activities:
@@ -233,11 +235,16 @@ def rescuetime_timechart():
             p = a[5]    # productivity
             if p > 0:
                 tc[k]['productive'] += t
+                sumProd += t
             elif p == 0:
                 tc[k]['productive'] += t / 2.0
                 tc[k]['distracting'] += t / 2.0
+                sumProd += t / 2.0
+                sumDist += t / 2.0
             elif p < 0:
                 tc[k]['distracting'] += t
+                sumDist += t
+        tc[24] = {'totalProductive': sumProd, 'totalDistracting': sumDist}
         return json.dumps(tc)
 
 

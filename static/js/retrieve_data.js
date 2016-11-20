@@ -37,7 +37,7 @@ function get_moves_places() {
 	}).done(function(data) {
 		moves = data[0]['segments'];
         if (moves == null) {
-            var map = new google.maps.Map($('#moves')[0], {
+            var map = new google.maps.Map($('#moveschart')[0], {
                 zoom: 12,
                 center: {lat: 40.794356, lng: -77.858171}
             });
@@ -87,6 +87,12 @@ function get_rescutime_timechart() {
 		dataType: "json"
 	}).done(function(data) {
 		rescuetime = data;
+		sumProd = Math.ceil(rescuetime[24].totalProductive);
+		sumDist = Math.ceil(rescuetime[24].totalDistracting);
+		$("#phour").html(Math.floor(sumProd/60));
+		$("#pmin").html(sumProd % 60);
+		$("#dhour").html(Math.floor(sumDist/60));
+		$("#dmin").html(sumDist % 60);
 		productivePoints = [];
 		distractingPoints = [];
 		for (var i = 0; i < data.length; i++) {
@@ -100,7 +106,7 @@ function get_rescutime_timechart() {
 			};
 		}
 		// barplot with CanvasJS
-		var chart = new CanvasJS.Chart("rescuetime", {
+		var chart = new CanvasJS.Chart("rescuetimechart", {
 			title: {
 				text: "RescueTime -- Productivity"
 			},
@@ -148,6 +154,7 @@ function get_fitbit_timechart() {
 	}).done(function(data) {
 		fitbit = data;
 		var steps = fitbit[0];
+		$("#steps").html(steps);
 		var ts = fitbit[1];
 		var intraday_steps = [];
 		for (var i = 0; i < ts.length; i++) {
@@ -157,7 +164,7 @@ function get_fitbit_timechart() {
 			};
 		}
 		// barplot with CanvasJS
-		var chart = new CanvasJS.Chart("fitbit", {
+		var chart = new CanvasJS.Chart("fitbitchart", {
 			title: {
 				text: "Fitbit -- Intra-day Steps"
 			},
@@ -182,6 +189,7 @@ function get_fitbit_timechart() {
 				type: "bar",
 				showInLegend: true,
 				legendText: "Steps",
+				color: "#014D65",
 				dataPoints: intraday_steps
 			}
 			]

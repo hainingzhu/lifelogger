@@ -11,8 +11,18 @@ html, body {
 #moves {
 	width: 50%;
 	height: 100%;
-	background-color: grey;
 	float: left;
+}
+
+#moveschart {
+	width: 100%;
+	height: 80%;
+}
+
+
+#movesfootnote {
+	width: 100%;
+	height: 20%;
 }
 
 #fitbit {
@@ -21,10 +31,31 @@ html, body {
 	float: left;
 }
 
+#fitbitchart {
+	width: 100%;
+	height: 80%;
+}
+
+#fitbitfootnote {
+	width: 100%;
+	height: 20%;
+}
+
 #rescuetime {
 	height: 100%; 
 	width: 25%;
 	float: left;
+}
+
+
+#rescuetimechart {
+	width: 100%;
+	height: 80%;
+}
+
+#rescuetimefootnote {
+	width: 100%;
+	height: 20%;
 }
 
 #data {
@@ -36,4 +67,11 @@ html, body {
 #survey {
 	width: 50%;
 	float: left;
+}
+
+
+.digits {
+	color: blue;
+	font-size: 30px;
+	font-weight: bold;
 }
