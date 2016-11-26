@@ -9,23 +9,31 @@ html, body {
 
 #date {
 	height: 100%;
-	width: 20%;
 	float: left;
+	padding-right: 20px;
+}
+
+#datepicker {
+	height: 100%;
+	width: 100%;
 }
 
 #loginapp {
 	height: 100%;
+	width: 40%;
 	float: left;
 }
 
 #loginapp img {
-	height: 200px;
-	padding: 20px;
-	padding-right: 100px;
+	height: 40%;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	padding-right: 5%;
 }
 
 #toprightpanel {
 	height: 100%;
+	width: 20%;
 	float: left;
 }
   
@@ -36,7 +44,7 @@ html, body {
 }
   
 #moves {
-	width: 47%;
+	width: 32%;
 	height: 100%;
 	float: left;
 	padding-right: 1%;
@@ -54,7 +62,7 @@ html, body {
 }
 
 #fitbit {
-	width: 25%;
+	width: 32%;
 	height: 100%;
 	float: left;
 	padding-right: 1%;
@@ -72,7 +80,7 @@ html, body {
 
 #rescuetime {
 	height: 100%; 
-	width: 25%;
+	width: 32%;
 	float: left;
 	padding-right: 1%;
 }

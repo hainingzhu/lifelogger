@@ -64,7 +64,7 @@ function get_moves_places() {
             center[0] /= places.length;
             center[1] /= places.length;
             var map_center = {lat: center[0], lng: center[1]};
-            var map = new google.maps.Map($('#moves')[0], {
+            var map = new google.maps.Map($('#moveschart')[0], {
                 zoom: 12,
                 center: map_center
             });
