@@ -39,19 +39,17 @@
 		<div id=rescuetime>
 			<div id=rescuetimechart></div>
 			<div id=rescuetimefootnote>
-				<h2>Productive Time</h2>
-				<hr>
+				<h2>Productive Time:</h2>
 				<p><span class=digits id=phour></span> hrs <span class=digits id=pmin></span> mins</p>
-				<h2>Distractive Time</h2>
-				<hr>
+				<br>
+				<h2>Distractive Time:</h2>
 				<p><span class=digits id=dhour></span> hrs <span class=digits id=dmin></span> mins</p>
 			</div>
 		</div>
 		<div id=fitbit>
 			<div id=fitbitchart></div>
 			<div id=fitbitfootnote>
-				<h2>Steps</h2>
-				<hr>
+				<h2>Steps:</h2>
 				<p><span class=digits id=steps></span></p>
 			</div>
 		</div>
@@ -87,7 +85,7 @@
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
-    <TABLE id="dataTable" width="350px" border="1">
+    <TABLE id="dataTable" width="250px" border="1">
       <tr>
         <th>What happened?</th>
         <th>Code</th>
@@ -466,8 +464,10 @@
   
   <div class="form-group">
   <label for="comment">Comment:</label> <BR>
-  <textarea class="form-control" rows="5" id="comment"></textarea>
+  <textarea class="form-control" rows="5" cols="80" id="comment"></textarea>
 </div>
+
+<div id=question>
 
   <P>1. How many steps did you walk today?<BR>
     <input type="text" id="text" name="text_name" <BR>
@@ -501,7 +501,7 @@
     <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
     <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
   </p>
-  
+  </div>
   
   <p id="export"></p>
 </div>
