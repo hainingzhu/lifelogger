@@ -49,7 +49,7 @@ def user_register():
         db = get_db()
         db.execute('insert into users (name, password) values ("{0}", "{1}");'.format(user, password))
         db.commit()
-        return login("Register succesfully. Please login.")
+        return login("Register successfully. Please login.")
     except sqlite3.Error as er:
         return login(er.message)
     
@@ -104,7 +104,13 @@ def login(message=""):
 @requires_auth
 def index():
     return render_template("index.html")
-    
+
+
+@app.route("/logout")
+@requires_auth
+def logout():
+    session.clear()
+    return login("You have successfully logged out!")
 
 """
 ========================================

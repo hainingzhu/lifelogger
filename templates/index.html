@@ -14,8 +14,24 @@
 </head>
 <body>
 
-<div id=date>
-	Date: <div id="datepicker"></div>
+<div id=header>
+	<div id=date>
+		Date: <div id="datepicker"></div>
+	</div>
+	<div id=loginapp>
+		<a href="rescuetime">
+			<img src={{ url_for('static', filename='img/RT.png') }} alt="Rescuetime" />
+		</a>
+		<a href="fitbit">
+			<img src={{ url_for('static', filename='img/FITBIT.png') }} alt="Fitbit" />
+		</a>
+		<a href="moves">
+			<img src={{ url_for('static', filename='img/MOVES.png') }} alt="Moves" />
+		</a>
+	</div>
+	<div id=toprightpanel>
+		<h4>Click on the icon to add applications | <a href='logout'>Logout</a></h4>
+	</div>
 </div>
 	
 <div id=data>

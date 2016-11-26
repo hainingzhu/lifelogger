@@ -2,16 +2,44 @@ html, body {
 	height: 100%;
 }
 
+#header {
+	height: 260px;
+	width: 100%;
+}
+
+#date {
+	height: 100%;
+	width: 20%;
+	float: left;
+}
+
+#loginapp {
+	height: 100%;
+	float: left;
+}
+
+#loginapp img {
+	height: 200px;
+	padding: 20px;
+	padding-right: 100px;
+}
+
+#toprightpanel {
+	height: 100%;
+	float: left;
+}
   
 #app {
 	height: 100%;
-	width: 100%;
+	width: 96%;
+	padding: 0px;
 }
   
 #moves {
-	width: 50%;
+	width: 47%;
 	height: 100%;
 	float: left;
+	padding-right: 1%;
 }
 
 #moveschart {
@@ -29,6 +57,7 @@ html, body {
 	width: 25%;
 	height: 100%;
 	float: left;
+	padding-right: 1%;
 }
 
 #fitbitchart {
@@ -45,6 +74,7 @@ html, body {
 	height: 100%; 
 	width: 25%;
 	float: left;
+	padding-right: 1%;
 }
 
 
@@ -59,14 +89,20 @@ html, body {
 }
 
 #data {
-	width: 50%;
+	width: 44%;
+	padding: 10px;
+	padding-left: 0px;
+	padding-right: 0.5%;
 	float: left;
 	height: 100%;
 }
 
 #survey {
-	width: 50%;
+	width: 54%;
 	float: left;
+	padding: 10px;
+	padding-left: 0px;
+	padding-right: 0.5%;
 }
 
 
