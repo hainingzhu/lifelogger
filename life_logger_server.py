@@ -19,6 +19,8 @@ import ssl
 import json
 from functools import wraps
 
+from datetime import datetime
+
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
@@ -353,6 +355,60 @@ def refresh_fitbit_token():
     return resp
     
     
+@app.route("/track_survey", methods=['POST'])
+@requires_auth
+def track_survey():
+    # survey questions
+    comments = request.form['comments']
+    step = request.form.get("step")
+    alcohol = request.form.get("alcohol")
+    cigarette = request.form.get("cigarette")
+    sleep = request.form.get("sleep")
+    percent_academic = request.form.get("percent_academic")
+    percent_social = request.form.get("percent_social")
+    percent_personal = request.form.get("percent_personal")
+    other_name = request.form.get("other_name")
+    percent_other = request.form.get("percent_other")
+
+    now = datetime.utcnow()
+
+    what_happen = request.form.get('what_happen')
+    code = request.form.get("code")
+    time_began = request.form.get("time_began")
+    time_end = request.form.get("time_end")
+    where_happen = request.form.get("where_happen")
+    feel = request.form.get("feel")
+    stress = request.form.get("stress")
+
+    try:
+        db = get_db()
+        db.execute('insert into manual_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) )
+
+        db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+
+        for i in range(1, 24):
+             # self-tracking
+            what_happen = request.form.get('what_happen' + str(i+1))
+            code = request.form.get("code" + str(i+1))
+            time_began = request.form.get("time_began" + str(i+1))
+            time_end = request.form.get("time_end" + str(i+1))
+            where_happen = request.form.get("where_happen" + str(i+1))
+            feel = request.form.get("feel" + str(i+1))
+            stress = request.form.get("stress" + str(i+1))
+            db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+
+        db.commit()
+        return submitted("Submit successfully. Thank you.")
+    except sqlite3.Error as er:
+        return submitted(er.message)
+
+
+
+@app.route("/submitted")
+def submitted(message=""):
+    return render_template("index.html", message=message)
+
+
 
 """
 ========================================
