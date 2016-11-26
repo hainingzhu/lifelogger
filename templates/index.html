@@ -461,13 +461,16 @@
   </div>
 
   <!-- <button id="export-btn" class="btn btn-primary">Add Row</button> -->
-  <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+  <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" /> <BR>
+  
+  
+  <div class="form-group">
+  <label for="comment">Comment:</label> <BR>
+  <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>
 
-  <P>1. Can you guess how many steps did you walk today?<BR>
-    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 3000 steps">Below 3000 steps<BR>
-    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 7000 steps">Below 7000 steps<BR>
-    <input type="radio" name="1.Can you guess how many steps did you walk today" value="Below 10000 steps">Below 10000 steps<BR>
-    <input type="radio" name="1.Can you guess how many steps did you walk today" value="I don’t know">I don’t know<BR>
+  <P>1. How many steps did you walk today?<BR>
+    <input type="text" id="text" name="text_name" <BR>
   </p>
 
   <p>2. How many alcoholic beverages did you drink today?<BR>
@@ -485,7 +488,14 @@
     <input type="radio" name="4. How would you rate your sleep quality last night" value="Very bad">Very bad<BR>
   </p>
 
-  <p>5. What percentage of the time did you:<BR>
+  <P>5. How useful is the feedback?<BR>
+    <input type="radio" name="5. How useful is the feedback" value="Very useful">Very useful<BR>
+    <input type="radio" name="5. How useful is the feedback" value="Somewhat useful">Somewhat useful<BR>
+    <input type="radio" name="5. How useful is the feedback" value="Not very useful">Not very useful<BR>
+    <input type="radio" name="5. How useful is the feedback" value="Not at all useful">Not at all useful<BR>
+  </p>
+
+  <p>6. What percentage of the time did you:
     <li>Spend on academic work <input type="text" id="text" name="text_name" <BR> % </li> 
     <li>Spend on leisure/social life activities <input type="text" id="text" name="text_name" <BR> % </li>
     <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>

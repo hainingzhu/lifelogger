@@ -78,6 +78,11 @@ html, body {
 	height: 20%;
 }
 
+#fitbitfootnote h2{
+	font-family: Avenir Next !important;
+	font-size: 14px;
+}
+
 #rescuetime {
 	height: 100%; 
 	width: 32%;
@@ -96,6 +101,11 @@ html, body {
 	height: 20%;
 }
 
+#rescuetimefootnote h2{
+	font-family: Avenir Next !important;
+	font-size: 14px;
+}
+
 #data {
 	width: 44%;
 	padding: 10px;
@@ -111,6 +121,15 @@ html, body {
 	padding: 10px;
 	padding-left: 0px;
 	padding-right: 0.5%;
+}
+
+#survey h2{
+	font-family: Avenir Next !important;
+	font-size: 12px;
+}
+#survey ul{
+	font-family: Avenir Next !important;
+	font-size: 10px;
 }
 
 
