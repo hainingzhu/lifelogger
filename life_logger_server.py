@@ -411,7 +411,7 @@ def track_survey():
 
 
 @app.route("/submitted")
-def submitted(message=""):
+def submitted_auto(message=""):
     return render_template("index.html", message=message)
 
 
@@ -447,7 +447,7 @@ def check_auth_manual():
     r = res.fetchall()
     if len(r) == 1:
         session['uid'] = r[0][0]
-        session['uname'] = user
+        session['uname'] = user_manual
         # # get Oauth login credentials
         # moves_login()
         # rescuetime_login()
@@ -471,12 +471,12 @@ def requires_auth_manual(f):
     return wrapper        
 
 @app.route("/login_manual")
-def login(message=""):
+def login_manual(message=""):
     return render_template("login_manual.html", message=message)
 
 @app.route("/home_manual")
 @requires_auth_manual
-def index():
+def index_manual():
     return render_template("manual_tracking.html")
 
 
@@ -534,7 +534,7 @@ def track_survey_manual():
         return submitted_manual(er.message)
 
 @app.route("/submitted_manual")
-def submitted(message=""):
+def submitted_manual(message=""):
     return render_template("manual_tracking.html", message=message)
 
 
