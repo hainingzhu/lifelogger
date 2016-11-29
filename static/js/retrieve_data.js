@@ -131,13 +131,15 @@ function get_rescutime_timechart() {
 				type: "bar",
 				showInLegend: true,
 				legendText: "Productive time",
-				dataPoints: productivePoints
+				dataPoints: productivePoints,
+				color: "#5DADE2"
 			},
 			{
 				type: "bar",
 				showInLegend: true,
 				legendText: "Distracting time",
 				dataPoints: distractingPoints
+				color: "#EF1903"
 			}
 			]
 		});
@@ -191,6 +193,7 @@ function get_fitbit_timechart() {
 				legendText: "Steps",
 				color: "#014D65",
 				dataPoints: intraday_steps
+				color:"#58D68D"
 			}
 			]
 		});
