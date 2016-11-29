@@ -446,7 +446,7 @@ def check_auth_manual():
         # moves_login()
         # rescuetime_login()
         # fitbit_login()
-        return render_template("manual_tracking.html")
+        return redirect(url_for("index_manual"))
     else:
         return login_manual("Wrong username or password. Please try again.")
 
@@ -464,11 +464,11 @@ def requires_auth_manual(f):
         return f(*args, **kwds)
     return wrapper        
 
-@app.route("/login_manual")
+@app.route("/login_b")
 def login_manual(message=""):
     return render_template("login_manual.html", message=message)
 
-@app.route("/home_manual")
+@app.route("/home_b")
 @requires_auth_manual
 def index_manual():
     return render_template("manual_tracking.html")
@@ -480,7 +480,7 @@ def logout_manual():
     session.clear()
     return login_manual("You have successfully logged out!")
 
-@app.route("/track_survey_manual", methods=['POST'])
+@app.route("/track_survey_b", methods=['POST'])
 @requires_auth_manual
 def track_survey_manual():
     # survey questions
