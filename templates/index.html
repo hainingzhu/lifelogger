@@ -6,6 +6,9 @@
   <title>Life Logger</title>
   <link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css") }}>
   <link rel="stylesheet" href={{ url_for("static", filename="css/homepage.css") }}>
+  <script type=text/javascript>
+    var SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
   <script src={{ url_for("static", filename="js/jquery.js") }}></script>
   <script src={{ url_for("static", filename="js/jquery-ui.js") }}></script>
   <script src={{ url_for("static", filename="js/retrieve_data.js") }}></script>
