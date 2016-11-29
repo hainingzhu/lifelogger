@@ -374,6 +374,132 @@ def track_survey():
     percent_personal = request.form.get("percent_personal")
     other_name = request.form.get("other_name")
     percent_other = request.form.get("percent_other")
+    feedback = request.form.get("feedback")
+
+    now = datetime.utcnow()
+
+    what_happen = request.form.get('what_happen')
+    code = request.form.get("code")
+    time_began = request.form.get("time_began")
+    time_end = request.form.get("time_end")
+    where_happen = request.form.get("where_happen")
+    feel = request.form.get("feel")
+    stress = request.form.get("stress")
+
+    try:
+        db = get_db()
+        db.execute('insert into auto_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) )
+
+        db.execute('insert into auto_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+
+        for i in range(1, 24):
+             # self-tracking
+            what_happen = request.form.get('what_happen' + str(i+1))
+            code = request.form.get("code" + str(i+1))
+            time_began = request.form.get("time_began" + str(i+1))
+            time_end = request.form.get("time_end" + str(i+1))
+            where_happen = request.form.get("where_happen" + str(i+1))
+            feel = request.form.get("feel" + str(i+1))
+            stress = request.form.get("stress" + str(i+1))
+            db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+
+        db.commit()
+        return submitted_auto("Submit successfully. Thank you.")
+    except sqlite3.Error as er:
+        return submitted_auto(er.message)
+
+
+
+@app.route("/submitted")
+def submitted_auto(message=""):
+    return render_template("index.html", message=message)
+
+
+####################################################################
+
+
+# manual tracking
+@app.route("/user_register_manual", methods=['POST'])
+def user_register_manual():
+    user_manual = request.form.get("name")
+    password_manual = request.form.get("password")
+    try:
+        db = get_db()
+        db.execute('insert into users_manual (name, password) values ("{0}", "{1}");'.format(user_manual, password_manual))
+        db.commit()
+        return login_manual("Register successfully. Please login.")
+    except sqlite3.Error as er:
+        return login_manual(er.message)
+
+
+@app.route("/check_auth_manual", methods=['POST'])    
+def check_auth_manual():
+    """
+    Authenticate the login credential.
+    
+    If valid, login user and get Oauth tokens for Moves, Rescuetime.
+    Otherwise, redirect to login page and ask user to retry.
+    """
+    user_manual = request.form.get("name")
+    password_manual = request.form.get("password")
+    db = get_db()
+    res = db.execute('select userid from users_manual where name="{0}" and password="{1}"; '.format(user_manual, password_manual))
+    r = res.fetchall()
+    if len(r) == 1:
+        session['uid'] = r[0][0]
+        session['uname'] = user_manual
+        # # get Oauth login credentials
+        # moves_login()
+        # rescuetime_login()
+        # fitbit_login()
+        return redirect(url_for("manual_tracking"))
+    else:
+        return login_manual("Wrong username or password. Please try again.")
+
+def requires_auth_manual(f):
+    """
+    My decorator for login check.
+    
+    If the session['uid'] exists, then the user is logged in.
+    Otherwise, redirect user to login page.
+    """
+    @wraps(f)
+    def wrapper(*args, **kwds):
+        if 'uid' not in session:
+            return login_manual("You are not logged in yet. Please log in")
+        return f(*args, **kwds)
+    return wrapper        
+
+@app.route("/login_manual")
+def login_manual(message=""):
+    return render_template("login_manual.html", message=message)
+
+@app.route("/home_manual")
+@requires_auth_manual
+def index_manual():
+    return render_template("manual_tracking.html")
+
+
+@app.route("/logout_manual")
+@requires_auth_manual
+def logout_manual():
+    session.clear()
+    return login_manual("You have successfully logged out!")
+
+@app.route("/track_survey_manual", methods=['POST'])
+@requires_auth_manual
+def track_survey_manual():
+    # survey questions
+    comments = request.form['comments']
+    step = request.form.get("step")
+    alcohol = request.form.get("alcohol")
+    cigarette = request.form.get("cigarette")
+    sleep = request.form.get("sleep")
+    percent_academic = request.form.get("percent_academic")
+    percent_social = request.form.get("percent_social")
+    percent_personal = request.form.get("percent_personal")
+    other_name = request.form.get("other_name")
+    percent_other = request.form.get("percent_other")
 
     now = datetime.utcnow()
 
@@ -403,15 +529,14 @@ def track_survey():
             db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
 
         db.commit()
-        return submitted("Submit successfully. Thank you.")
+        return submitted_manual("Submit successfully. Thank you.")
     except sqlite3.Error as er:
-        return submitted(er.message)
+        return submitted_manual(er.message)
 
+@app.route("/submitted_manual")
+def submitted_manual(message=""):
+    return render_template("manual_tracking.html", message=message)
 
-
-@app.route("/submitted")
-def submitted(message=""):
-    return render_template("index.html", message=message)
 
 
 

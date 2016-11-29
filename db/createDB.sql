@@ -26,24 +26,54 @@ CREATE TABLE IF NOT EXISTS fitbit (
     fitbit_refresh_token text
 );
 
+CREATE TABLE IF NOT EXISTS auto_track_survey (
+	id INTEGER PRIMARY KEY,
+	uid INTEGER REFERENCES users(userid),
+	submit_date date,
+	comments text, 
+	step int, 
+	alcohol text, 
+	cigarette text, 
+	sleep text, 
+	percent_academic text, 
+	percent_socialt text, 
+	percent_personal text, 
+	other_name text, 
+	percent_other text,
+	feedback text
+);
+
+CREATE TABLE IF NOT EXISTS auto_track_entry (
+	id INTEGER PRIMARY KEY,
+	submit_date date,,
+	what_happen text,
+	code text,
+	time_began text,
+	time_end text,
+	where_happen text,
+	feel text,
+	stree text
+);
+
 CREATE TABLE IF NOT EXISTS manual_track_survey (
 	id INTEGER PRIMARY KEY,
 	uid INTEGER REFERENCES users(userid),
 	submit_date date,
-	question_step int,
-	question_alcohol text,
-	question_cigarette text,
-	question_sleep int,
-	question_work text,
-	question_leisure text,
-	question_maintenance text,
-	question_other_type text,
-	question_other text
+	comments text, 
+	step int, 
+	alcohol text, 
+	cigarette text, 
+	sleep text, 
+	percent_academic text, 
+	percent_socialt text, 
+	percent_personal text, 
+	other_name text, 
+	percent_other text
 );
 
 CREATE TABLE IF NOT EXISTS manual_track_entry (
 	id INTEGER PRIMARY KEY,
-	survey_id INTEGER REFERENCES manual_track_survey(id),
+	submit_date date,,
 	what_happen text,
 	code text,
 	time_began text,
