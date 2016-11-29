@@ -9,10 +9,13 @@ Oauth script for Moves app.
 from flask_oauthlib.client import OAuth
 from base64 import b64encode
 
+import os
+here = os.path.dirname(os.path.abspath(__file__))
+
 
 def get_oauth_credential():
     credentials = {}
-    with open("oauth_credentials") as fin:
+    with open(here + "/oauth_credentials") as fin:
         credentials["moves_client_id"] = fin.readline().strip()
         credentials["moves_client_secret"] = fin.readline().strip()
         credentials["rescuetime_client_id"] = fin.readline().strip()
