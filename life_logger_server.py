@@ -15,7 +15,7 @@ from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server, authorizationHeader
 import requests
 import sqlite3
-# import ssl
+import ssl
 import json
 from functools import wraps
 
@@ -24,8 +24,8 @@ from datetime import datetime
 import os
 here = os.path.dirname(os.path.abspath(__file__))
 
-# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-# context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
 
 app = Flask(__name__)
@@ -135,7 +135,7 @@ def moves_login():
     r = res.fetchone()
     if r is None:
         print "Authentication on Moves server"
-        return moves.authorize(callback= SERVERNAME + "moves_oauth_accept")
+        return moves.authorize(callback= DEVSERVERNAME + "moves_oauth_accept")
     else:
         session['moves_token'] = r[1]
         session['moves_user_id'] = r[2]
@@ -200,7 +200,7 @@ def rescuetime_login():
     res = db.execute('select * from rescuetime where uid="{0}";'.format(session['uid']))
     r = res.fetchone()
     if r is None:
-        return rescuetime.authorize(callback= SERVERNAME+"rescuetime_oauth_accept")
+        return rescuetime.authorize(callback= DEVSERVERNAME+"rescuetime_oauth_accept")
     else:
         session['rescuetime_token'] = r[1]
         return json.dumps(r)
@@ -278,7 +278,7 @@ def fitbit_login():
     res = db.execute('select * from fitbit where uid="{0}";'.format(session['uid']))
     r = res.fetchone()
     if r is None:
-        return fitbit.authorize(callback= SERVERNAME+"fitbit_oauth_accept")
+        return fitbit.authorize(callback= DEVSERVERNAME+"fitbit_oauth_accept")
     else:
         session["fitbit_token"] = r[1]
         session["fitbit_user_id"] = r[2]
@@ -431,5 +431,5 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    #app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
+    #app.run(debug=True)
+    app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
