@@ -32,7 +32,7 @@ function getDate(delimiter) {
 function get_moves_places() {
 	var dateStr = getDate("");
 	$.ajax({
-		url: "/moves_places/" + dateStr,
+		url: SCRIPT_ROOT + "/moves_places/" + dateStr,
 		dataType: "json"
 	}).done(function(data) {
 		moves = data[0]['segments'];
@@ -83,7 +83,7 @@ function get_moves_places() {
 
 function get_rescutime_timechart() {
 	$.ajax({
-		url: "/rescuetime_timechart",
+		url: SCRIPT_ROOT + "/rescuetime_timechart",
 		dataType: "json"
 	}).done(function(data) {
 		rescuetime = data;
@@ -149,7 +149,7 @@ function get_rescutime_timechart() {
 function get_fitbit_timechart() {
 	var dateStr = getDate('-');
 	$.ajax({
-		url: "/fitbit_activity/" + dateStr,
+		url: SCRIPT_ROOT + "/fitbit_activity/" + dateStr,
 		dataType: "json"
 	}).done(function(data) {
 		fitbit = data;
