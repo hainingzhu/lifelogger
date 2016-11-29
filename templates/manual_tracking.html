@@ -4,6 +4,7 @@
    
 
     <SCRIPT language="javascript">
+    var rowId = 10;
     function addRow(tableID) {
 
       var table = document.getElementById(tableID);
@@ -34,9 +35,6 @@
     }
 
   </SCRIPT>
-
-
-  
   </head>
   <body>
     <!-- {{ message }} -->
@@ -62,8 +60,919 @@
   </ul>
   
   <div id="table">
+<!--     <span class="table-add glyphicon glyphicon-plus"></span>
+    <table class="table"> -->
+    <!-- <table id="table" border=”1″ style=”width:300px”> -->
+    <form action="submit_track" method=post>
+    <TABLE id="dataTable" width="350px" border="1">
+      <tr>
+        <th>What happened?</th>
+        <th>Code</th>
+        <th>Time began</th>
+        <th>Time ended</th>
+        <th>Where?</th>
+        <th>What did you feel?</th>
+        <th>Stress</th>
+      </tr>
+      <tr>
+        <TD><INPUT type="text" name="what_happen"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- repeat row 1 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
 
-  <form action="track_survey" method=post>
+       <!-- repeat row 2 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- repeat row 3 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- repeat row 4 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 5 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 6 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+       <!-- repeat row 7 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- repeat row 8 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+      <!-- repeat row 9 -->
+      <tr>
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="code">        
+                    <option value="Work">Work</option>
+                    <option value="Leisure">Leisure</option>
+                    <option value="Personal maintenance">Personal maintenance</option>
+            </select>
+        </td>
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>      
+        <td> 
+            <select name="code">        
+                    <option value="12:00 AM">12:00 AM</option>
+                    <option value="1:00 AM">1:00 AM</option>
+                    <option value="2:00 AM">2:00 AM</option>
+                    <option value="3:00 AM">3:00 AM</option>
+                    <option value="4:00 AM">4:00 AM</option>
+                    <option value="5:00 AM">5:00 AM</option>
+                    <option value="6:00 AM">6:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="2:00 PM">2:00 PM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                    <option value="11:00 PM">11:00 PM</option>
+            </select>
+        </td>           
+        <TD><INPUT type="text" name="txt"/></TD>
+        <td> 
+            <select name="feel">        
+                    <option value="Very Unhappy">Very Unhappy</option>
+                    <option value="Unhappy">Unhappy</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Very Happy">Very Happy</option>
+            </select>
+        </td>
+        <td> 
+            <select name="stress">        
+                    <option value="Very relaxed">Very relaxed</option>
+                    <option value="Relaxed">Relaxed</option>
+                    <option value="Stressed">Stressed</option>
+                    <option value="Very stressed">Very stressed</option>
+            </select>
+        </td>   
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+
+
+      
+    </table>
+  </div>
 
   <!-- <button id="export-btn" class="btn btn-primary">Add Row</button> -->
   <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
@@ -99,13 +1008,6 @@
         <li>Spend on leisure/social life activities <input type="text" id="percent_social" name="percent_social" <BR> % </li>
         <li>Spend on personal maintenance <input type="text" id="percent_personal" name="percent_personal" <BR> % </li>
         <li>Other: <input type="text" id="other_name" name="other_name" <BR> (please specify) <input type="text" id="percent_other" name="percent_other" <BR> % </li>
-      </p>
-
-      <p>6. What percentage of the time did you:
-        <li>Spend on academic work <input type="text" id="text" name="text_name" <BR> % </li> 
-        <li>Spend on leisure/social life activities <input type="text" id="text" name="text_name" <BR> % </li>
-        <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
-        <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
       </p>
       
       <input type="submit" value="Submit">
