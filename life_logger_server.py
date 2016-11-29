@@ -388,9 +388,9 @@ def track_survey():
 
     try:
         db = get_db()
-        db.execute('insert into auto_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) )
+        db.execute('insert into auto_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other, feedback) )
 
-        db.execute('insert into auto_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+        db.execute('insert into auto_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
 
         for i in range(1, 24):
              # self-tracking
@@ -401,18 +401,12 @@ def track_survey():
             where_happen = request.form.get("where_happen" + str(i+1))
             feel = request.form.get("feel" + str(i+1))
             stress = request.form.get("stress" + str(i+1))
-            db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+            db.execute('insert into auto_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
 
         db.commit()
-        return submitted_auto("Submit successfully. Thank you.")
+        return "Submit successfully. Thank you!"
     except sqlite3.Error as er:
-        return submitted_auto(er.message)
-
-
-
-@app.route("/submitted")
-def submitted_auto(message=""):
-    return render_template("index.html", message=message)
+        return er.message
 
 
 ####################################################################
@@ -452,7 +446,7 @@ def check_auth_manual():
         # moves_login()
         # rescuetime_login()
         # fitbit_login()
-        return redirect(url_for("manual_tracking"))
+        return render_template("manual_tracking.html")
     else:
         return login_manual("Wrong username or password. Please try again.")
 
@@ -513,9 +507,9 @@ def track_survey_manual():
 
     try:
         db = get_db()
-        db.execute('insert into manual_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) )
+        db.execute('insert into manual_track_survey ( uid, submit_date, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, comments, step, alcohol, cigarette, sleep, percent_academic, percent_social, percent_personal, other_name, percent_other) )
 
-        db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+        db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
 
         for i in range(1, 24):
              # self-tracking
@@ -526,17 +520,12 @@ def track_survey_manual():
             where_happen = request.form.get("where_happen" + str(i+1))
             feel = request.form.get("feel" + str(i+1))
             stress = request.form.get("stress" + str(i+1))
-            db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); '.format(session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
+            db.execute('insert into manual_track_entry ( uid, submit_date, what_happen, code, time_began, time_end, where_happen, feel, stress) values (?, ?, ?, ?, ?, ?, ?, ?, ?); ', (session['uid'], now, what_happen, code, time_began, time_end, where_happen, feel, stress) )
 
         db.commit()
-        return submitted_manual("Submit successfully. Thank you.")
+        return "Submit successfully. Thank you."
     except sqlite3.Error as er:
-        return submitted_manual(er.message)
-
-@app.route("/submitted_manual")
-def submitted_manual(message=""):
-    return render_template("manual_tracking.html", message=message)
-
+        return er.message
 
 
 
