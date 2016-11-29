@@ -191,9 +191,9 @@ function get_fitbit_timechart() {
 				type: "bar",
 				showInLegend: true,
 				legendText: "Steps",
-				color: "#014D65",
+				color:"#58D68D",
 				dataPoints: intraday_steps,
-				color:"#58D68D"
+				
 			}
 			]
 		});
