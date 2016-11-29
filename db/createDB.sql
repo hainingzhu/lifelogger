@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS auto_track_survey (
 	cigarette text, 
 	sleep text, 
 	percent_academic text, 
-	percent_socialt text, 
+	percent_social text, 
 	percent_personal text, 
 	other_name text, 
 	percent_other text,
@@ -45,14 +45,21 @@ CREATE TABLE IF NOT EXISTS auto_track_survey (
 
 CREATE TABLE IF NOT EXISTS auto_track_entry (
 	id INTEGER PRIMARY KEY,
-	submit_date date,,
+	uid INTEGER REFERENCES users(userid),
+	submit_date date,
 	what_happen text,
 	code text,
 	time_began text,
 	time_end text,
 	where_happen text,
 	feel text,
-	stree text
+	stress text
+);
+
+CREATE TABLE IF NOT EXISTS users_manual (
+	userid INTEGER PRIMARY KEY,
+    name text unique,
+    password text not null
 );
 
 CREATE TABLE IF NOT EXISTS manual_track_survey (
@@ -65,7 +72,7 @@ CREATE TABLE IF NOT EXISTS manual_track_survey (
 	cigarette text, 
 	sleep text, 
 	percent_academic text, 
-	percent_socialt text, 
+	percent_social text, 
 	percent_personal text, 
 	other_name text, 
 	percent_other text
@@ -73,12 +80,13 @@ CREATE TABLE IF NOT EXISTS manual_track_survey (
 
 CREATE TABLE IF NOT EXISTS manual_track_entry (
 	id INTEGER PRIMARY KEY,
-	submit_date date,,
+	uid INTEGER REFERENCES users(userid),
+	submit_date date,
 	what_happen text,
 	code text,
 	time_began text,
 	time_end text,
 	where_happen text,
 	feel text,
-	stree text
+	stress text
 );
