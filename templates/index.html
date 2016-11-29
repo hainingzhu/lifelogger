@@ -62,6 +62,40 @@
 
 <div id=survey>
 
+<SCRIPT language="javascript">
+    function addRow(tableID) {
+
+      var table = document.getElementById(tableID);
+
+      var rowCount = table.rows.length;
+      var row = table.insertRow(rowCount);
+
+      var colCount = table.rows[0].cells.length;
+
+      for(var i=0; i<colCount; i++) {
+
+        var newcell = row.insertCell(i);
+
+        newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+        //alert(newcell.childNodes);
+        switch(newcell.childNodes[0].type) {
+          case "text":
+              newcell.childNodes[0].value = "";
+              break;
+          case "checkbox":
+              newcell.childNodes[0].checked = false;
+              break;
+          case "select-one":
+              newcell.childNodes[0].selectedIndex = 0;
+              break;
+        }
+
+        newcell.childNodes[0].name = table.rows[1].cells[i].name.concat(rowCount.toString());
+      }
+    }
+
+  </SCRIPT>
+
   <h2>[Instruction]</h2>
   <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
   
@@ -82,6 +116,7 @@
   </ul>
   
   <div id="table">
+  <form action="track_survey" method=post>
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
@@ -96,7 +131,7 @@
         <th>Stress</th>
       </tr>
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen"/></TD>
         <td> 
             <select name="code">        
                     <option value="Work">Work</option>
@@ -105,7 +140,7 @@
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -133,7 +168,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -160,7 +195,7 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen"/></TD>
         <td> 
             <select name="feel">        
                     <option value="Very Unhappy">Very Unhappy</option>
@@ -185,16 +220,16 @@
       </tr>
       <!-- repeat row 1 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen2"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code2">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began2">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -222,7 +257,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end2">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -249,9 +284,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen2"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel2">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -259,7 +294,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress2">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -275,16 +310,16 @@
 
        <!-- repeat row 2 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen3"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code3">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began3">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -312,7 +347,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end3">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -339,9 +374,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen3"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel3">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -349,7 +384,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress3">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -364,16 +399,16 @@
       </tr>
       <!-- repeat row 3 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen4"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code4">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began4">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -401,7 +436,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end4">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -428,9 +463,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen4"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel4">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -438,7 +473,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress4">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -453,16 +488,16 @@
       </tr>
       <!-- repeat row 4 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen5"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code5">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began5">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -490,7 +525,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end5">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -517,9 +552,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen5"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel5">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -527,7 +562,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress5">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -543,7 +578,7 @@
 
       <!-- repeat row 5 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen6"/></TD>
         <td> 
             <select name="code">        
                     <option value="Work">Work</option>
@@ -552,7 +587,7 @@
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began6">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -580,7 +615,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end6">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -607,9 +642,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen6"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel6">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -617,7 +652,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress6">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -633,16 +668,16 @@
 
       <!-- repeat row 6 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen7"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code7">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began7">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -670,7 +705,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end7">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -697,9 +732,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen7"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel7">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -707,7 +742,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress7">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -723,16 +758,16 @@
 
        <!-- repeat row 7 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen8"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code8">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began8">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -760,7 +795,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end8">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -787,9 +822,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen8"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel8">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -797,7 +832,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress8">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -812,16 +847,16 @@
       </tr>
       <!-- repeat row 8 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen9"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code9">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began9">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -849,7 +884,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end9">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -876,9 +911,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen9"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel9">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -886,7 +921,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress9">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -902,16 +937,16 @@
 
       <!-- repeat row 9 -->
       <tr>
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="what_happen10"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code10">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
             </select>
         </td>
         <td> 
-            <select name="code">        
+            <select name="time_began10">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -939,7 +974,7 @@
             </select>
         </td>      
         <td> 
-            <select name="code">        
+            <select name="time_end10">        
                     <option value="12:00 AM">12:00 AM</option>
                     <option value="1:00 AM">1:00 AM</option>
                     <option value="2:00 AM">2:00 AM</option>
@@ -966,9 +1001,9 @@
                     <option value="11:00 PM">11:00 PM</option>
             </select>
         </td>           
-        <TD><INPUT type="text" name="txt"/></TD>
+        <TD><INPUT type="text" name="where_happen10"/></TD>
         <td> 
-            <select name="feel">        
+            <select name="feel10">        
                     <option value="Very Unhappy">Very Unhappy</option>
                     <option value="Unhappy">Unhappy</option>
                     <option value="Happy">Happy</option>
@@ -976,7 +1011,7 @@
             </select>
         </td>
         <td> 
-            <select name="stress">        
+            <select name="stress10">        
                     <option value="Very relaxed">Very relaxed</option>
                     <option value="Relaxed">Relaxed</option>
                     <option value="Stressed">Stressed</option>
@@ -1004,31 +1039,34 @@
 </div>
 
 <div id=question>
+  <p>Comment: Do you have any comments about your day?<BR>
+        <input type="text" id="comments" name="comments" <BR>
+      </p>
 
   <P>1. How many steps did you walk today?<BR>
-    <input type="text" id="text" name="text_name" <BR>
+    <input type="text" id="step" name="step" <BR>
   </p>
 
   <p>2. How many alcoholic beverages did you drink today?<BR>
-    <input type="text" id="text" name="text_name" <BR>
+    <input type="text" id="alcohol" name="alcohol" <BR>
   </p>
 
   <p>3. How many cigarettes did you smoke today?<BR>
-    <input type="text" id="text" name="text_name" <BR>
+    <input type="text" id="cigarette" name="cigarette" <BR>
   </p>
 
   <P>4. How would you rate your sleep quality last night?<BR>
-    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very good">Very good<BR>
-    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly good">Fairly good<BR>
-    <input type="radio" name="4. How would you rate your sleep quality last night" value="Fairly bad">Fairly bad<BR>
-    <input type="radio" name="4. How would you rate your sleep quality last night" value="Very bad">Very bad<BR>
+    <input type="radio" id="very_good" name="sleep" value="Very good">Very good<BR>
+        <input type="radio" id="fairly_good" name="sleep" value="Fairly good">Fairly good<BR>
+        <input type="radio" id="fairly_bad" name="sleep" value="Fairly bad">Fairly bad<BR>
+        <input type="radio" id="very_bad" name="sleep" value="Very bad">Very bad<BR>
   </p>
 
   <P>5. How useful is the feedback?<BR>
-    <input type="radio" name="5. How useful is the feedback" value="Very useful">Very useful<BR>
-    <input type="radio" name="5. How useful is the feedback" value="Somewhat useful">Somewhat useful<BR>
-    <input type="radio" name="5. How useful is the feedback" value="Not very useful">Not very useful<BR>
-    <input type="radio" name="5. How useful is the feedback" value="Not at all useful">Not at all useful<BR>
+    <input type="radio" name="feedback" value="Very useful">Very useful<BR>
+    <input type="radio" name="feedback" value="Somewhat useful">Somewhat useful<BR>
+    <input type="radio" name="feedback" value="Not very useful">Not very useful<BR>
+    <input type="radio" name="feedback" value="Not at all useful">Not at all useful<BR>
   </p>
 
   <p>6. What percentage of the time did you:
@@ -1037,9 +1075,10 @@
     <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
     <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
   </p>
-  
+
   <br>
   <input type="submit" value="Submit">
+  </form>
   </div>
   
   <p id="export"></p>
