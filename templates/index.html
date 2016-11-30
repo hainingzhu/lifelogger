@@ -14,38 +14,6 @@
   <script src={{ url_for("static", filename="js/retrieve_data.js") }}></script>
   <script src={{ url_for("static", filename="js/canvasjs.min.js") }}></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL-i8Ridf0tibzpzu-YsPR13sLIg5QbHA"></script>
-   <SCRIPT language="javascript">
-    var rowId = 10;
-    function addRow(tableID) {
-
-      var table = document.getElementById(tableID);
-
-      var rowCount = table.rows.length;
-      var row = table.insertRow(rowCount);
-
-      var colCount = table.rows[0].cells.length;
-
-      for(var i=0; i<colCount; i++) {
-
-        var newcell = row.insertCell(i);
-
-        newcell.innerHTML = table.rows[1].cells[i].innerHTML;
-        //alert(newcell.childNodes);
-        switch(newcell.childNodes[0].type) {
-          case "text":
-              newcell.childNodes[0].value = "";
-              break;
-          case "checkbox":
-              newcell.childNodes[0].checked = false;
-              break;
-          case "select-one":
-              newcell.childNodes[0].selectedIndex = 0;
-              break;
-        }
-      }
-    }
-
-  </SCRIPT>
 </head>
 <body>
 
@@ -132,7 +100,7 @@
         <th>What did you feel?</th>
         <th>Stress</th>
       </tr>
-      <tr>
+      <tr id=row1>
         <TD><INPUT type="text" name="what_happen"/></TD>
         <td> 
             <select name="code">        
@@ -143,61 +111,9 @@
         </td>
         <td> 
             <input type="time" name="time_began">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen"/></TD>
         <td> 
@@ -215,11 +131,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
       <!-- repeat row 1 -->
@@ -234,61 +145,9 @@
         </td>
         <td> 
             <input type="time" name="time_began2">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end2">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen2"/></TD>
         <td> 
@@ -306,11 +165,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
 
@@ -326,61 +180,9 @@
         </td>
         <td> 
             <input type="time" name="time_began3">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end3">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>                     
         <TD><INPUT type="text" name="where_happen3"/></TD>
         <td> 
@@ -398,11 +200,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
       <!-- repeat row 3 -->
@@ -417,61 +214,9 @@
         </td>
       <td> 
             <input type="time" name="time_began4">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end4">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen4"/></TD>
         <td> 
@@ -489,11 +234,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
       <!-- repeat row 4 -->
@@ -508,61 +248,9 @@
         </td>
         <td> 
             <input type="time" name="time_began5">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end5">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen5"/></TD>
         <td> 
@@ -580,11 +268,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
 
@@ -600,61 +283,9 @@
         </td>
        <td> 
             <input type="time" name="time_began6">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end6">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen6"/></TD>
         <td> 
@@ -672,11 +303,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
 
@@ -692,61 +318,9 @@
         </td>
         <td> 
             <input type="time" name="time_began7">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end7">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>         
         <TD><INPUT type="text" name="where_happen7"/></TD>
         <td> 
@@ -764,11 +338,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
 
@@ -784,61 +353,9 @@
         </td>
        <td> 
             <input type="time" name="time_began8">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end8">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen8"/></TD>
         <td> 
@@ -856,11 +373,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
       <!-- repeat row 8 -->
@@ -875,62 +387,9 @@
         </td>
        <td> 
             <input type="time" name="time_began9">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end9">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
-        </td>           
         </td>           
         <TD><INPUT type="text" name="where_happen9"/></TD>
         <td> 
@@ -948,11 +407,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
 
@@ -968,61 +422,9 @@
         </td>
        <td> 
             <input type="time" name="time_began10">
-            <!-- <select name="time_began">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>      
         <td> 
             <input type="time" name="time_end10">
-            <!-- <select name="time_end">        
-                    <option value="12:00 AM">12:00 AM</option>
-                    <option value="1:00 AM">1:00 AM</option>
-                    <option value="2:00 AM">2:00 AM</option>
-                    <option value="3:00 AM">3:00 AM</option>
-                    <option value="4:00 AM">4:00 AM</option>
-                    <option value="5:00 AM">5:00 AM</option>
-                    <option value="6:00 AM">6:00 AM</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="8:00 AM">8:00 AM</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="12:00 PM">12:00 PM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                    <option value="5:00 PM">5:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="7:00 PM">7:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
-                    <option value="9:00 PM">9:00 PM</option>
-                    <option value="10:00 PM">10:00 PM</option>
-                    <option value="11:00 PM">11:00 PM</option>
-            </select> -->
         </td>           
         <TD><INPUT type="text" name="where_happen10"/></TD>
         <td> 
@@ -1040,11 +442,6 @@
                     <option value="Stressed">Stressed</option>
                     <option value="Very stressed">Very stressed</option>
             </select>
-        </td>   
-          <span class="table-remove glyphicon glyphicon-remove"></span>
-        </td>
-          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-          <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
       </tr>
       
