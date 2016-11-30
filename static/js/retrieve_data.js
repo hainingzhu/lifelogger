@@ -1,6 +1,9 @@
 var moves;
 var rescuetime;
 var fitbit;
+var focus = 0;
+var rowId = 10;
+var tmp;
 
 $('document').ready(function(){
 	// setup the date time picker.
@@ -8,6 +11,14 @@ $('document').ready(function(){
 	get_moves_places();
 	get_rescutime_timechart();
 	get_fitbit_timechart();
+	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
+		$(ele).focus(function() {
+			console.log("focus in" + idx);
+		});
+		$(ele).blur(function() {
+			console.log("focus out" + idx);
+		});
+	});
 });
 
 /*
@@ -208,33 +219,38 @@ Add row for the manually input survey
 */
 function addRow(tableID) {
 
-      var table = document.getElementById(tableID);
+  var table = document.getElementById(tableID);
 
-      var rowCount = table.rows.length;
-      var row = table.insertRow(rowCount);
+  var rowCount = table.rows.length;
+  var row = table.insertRow(rowCount);
 
-      var colCount = table.rows[0].cells.length;
+  var colCount = table.rows[0].cells.length;
 
-      for(var i=0; i<colCount; i++) {
+  for(var i=0; i<colCount; i++) {
 
-        var newcell = row.insertCell(i);
+	var newcell = row.insertCell(i);
 
-        newcell.innerHTML = table.rows[1].cells[i].innerHTML;
-        //alert(newcell.childNodes);
-        switch(newcell.childNodes[0].type) {
-          case "text":
-              newcell.childNodes[0].value = "";
-              break;
-          case "checkbox":
-              newcell.childNodes[0].checked = false;
-              break;
-          case "select-one":
-              newcell.childNodes[0].selectedIndex = 0;
-              break;
-        }
-
-        newcell.childNodes[0].name = table.rows[1].cells[i].name.concat(rowCount.toString());
-      }
-    }
-	
-	
+	newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+	//alert(newcell.childNodes);
+	switch(newcell.childNodes[0].type) {
+	  case "text":
+		  newcell.childNodes[0].value = "";
+		  break;
+	  case "checkbox":
+		  newcell.childNodes[0].checked = false;
+		  break;
+	  case "select-one":
+		  newcell.childNodes[0].selectedIndex = 0;
+		  break;
+	}
+	var newName = $(table.rows[1].cells[i].innerHTML).attr('name') + rowCount;
+	console.log(newName);
+	console.log(newcell.innerHTML);
+	$(newcell.innerHTML).attr('name', newName);
+	if (i==3) {
+		console.log(i + newcell.childNodes[0]);
+		$(newcell.childNodes[0]).blur(function(){console.log("focus out");});
+		$(newcell.childNodes[0]).focus(function(){console.log("focus in");});
+	}
+  }
+}
