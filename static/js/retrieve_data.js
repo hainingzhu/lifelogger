@@ -62,13 +62,13 @@ function updatePieChart() {
 	{
 		title:{
 			text: "How my time is spent in a day?",
-			fontFamily: "arial black"
+			fontFamily: "arial black",
 			fontsize:16,
 		},
                 animationEnabled: true,
 		legend: {
 			verticalAlign: "bottom",
-			horizontalAlign: "center"
+			horizontalAlign: "center",
 			fontsize:10,
 		},
 		theme: "theme1",
@@ -185,13 +185,23 @@ function get_rescutime_timechart() {
 		productivePoints = [];
 		distractingPoints = [];
 		for (var i = 0; i < data.length; i++) {
+			var time_surfix;
+			var lb = i%12;
+			if (i == 12) {
+				lb = 12;
+			}
+			if (i>=12) {
+				time_surfix = "pm";
+			} else {
+				time_surfix = "am";
+			}
 			productivePoints[i] = {
 				y: data[i]['productive'], 
-				label: i + ":00"
+				label: lb + ":00 " + time_surfix
 			};
 			distractingPoints[i] = {
 				y: data[i]['distracting'],
-				label: i + ":00"
+				label: lb + ":00 " + time_surfix
 			};
 		}
 		// barplot with CanvasJS
@@ -249,9 +259,19 @@ function get_fitbit_timechart() {
 		var ts = fitbit[1];
 		var intraday_steps = [];
 		for (var i = 0; i < ts.length; i++) {
+			var time_surfix;
+			var lb = i%12;
+			if (i == 12) {
+				lb = 12;
+			}
+			if (i>=12) {
+				time_surfix = "pm";
+			} else {
+				time_surfix = "am";
+			}
 			intraday_steps[i] = {
 				y: ts[i],
-				label: i+":00"
+				label: lb+":00 "+time_surfix
 			};
 		}
 		// barplot with CanvasJS
