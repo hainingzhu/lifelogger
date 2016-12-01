@@ -67,7 +67,7 @@ function updatePieChart() {
 		},
                 animationEnabled: true,
 		legend: {
-			verticalAlign: "bottom",
+			verticalAlign: "top",
 			horizontalAlign: "center",
 			fontsize:10,
 		},
