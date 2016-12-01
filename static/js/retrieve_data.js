@@ -63,18 +63,20 @@ function updatePieChart() {
 		title:{
 			text: "How my time is spent in a day?",
 			fontFamily: "arial black"
+			fontsize:16,
 		},
                 animationEnabled: true,
 		legend: {
 			verticalAlign: "bottom",
 			horizontalAlign: "center"
+			fontsize:10,
 		},
 		theme: "theme1",
 		data: [
 		{        
 			type: "pie",
 			indexLabelFontFamily: "Garamond",       
-			indexLabelFontSize: 20,
+			indexLabelFontSize: 14,
 			indexLabelFontWeight: "bold",
 			startAngle:0,
 			indexLabelFontColor: "MistyRose",       
