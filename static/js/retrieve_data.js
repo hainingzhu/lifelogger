@@ -217,40 +217,24 @@ function get_fitbit_timechart() {
 /*
 Add row for the manually input survey
 */
-function addRow(tableID) {
+function addRow() {
 
-  var table = document.getElementById(tableID);
+  var table = $('#dataTable');
 
-  var rowCount = table.rows.length;
-  var row = table.insertRow(rowCount);
-
-  var colCount = table.rows[0].cells.length;
+  var rowCount = table[0].rows.length;
+  var row = $("#row1").clone();
+  var rowFields = row.children();
+  var colCount = rowFields.length;
 
   for(var i=0; i<colCount; i++) {
-
-	var newcell = row.insertCell(i);
-
-	newcell.innerHTML = table.rows[1].cells[i].innerHTML;
-	//alert(newcell.childNodes);
-	switch(newcell.childNodes[0].type) {
-	  case "text":
-		  newcell.childNodes[0].value = "";
-		  break;
-	  case "checkbox":
-		  newcell.childNodes[0].checked = false;
-		  break;
-	  case "select-one":
-		  newcell.childNodes[0].selectedIndex = 0;
-		  break;
-	}
-	var newName = $(table.rows[1].cells[i].innerHTML).attr('name') + rowCount;
-	console.log(newName);
-	console.log(newcell.innerHTML);
-	$(newcell.innerHTML).attr('name', newName);
+	var curCell = rowFields[i];
+	curCell.children[0].name += rowCount;
 	if (i==3) {
-		console.log(i + newcell.childNodes[0]);
-		$(newcell.childNodes[0]).blur(function(){console.log("focus out");});
-		$(newcell.childNodes[0]).focus(function(){console.log("focus in");});
+		console.log(i + curCell.children[0]);
+		$(curCell.children[0]).blur(function(){console.log("focus out");});
+		$(curCell.children[0]).focus(function(){console.log("focus in");});
 	}
   }
+  
+  table.append(row[0]);
 }
