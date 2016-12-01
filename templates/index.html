@@ -86,7 +86,7 @@
   </ul>
   
   <div id="table">
-  <form action="track_survey" method=post>
+  <form action={{ url_for("track_survey") }} method=post>
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
@@ -455,7 +455,7 @@
   
   <div class="form-group" id = "comment"> <br>
   <label for="comment">Comment:</label> </span> <BR>
-  <textarea class="form-control" rows="5" cols="80" id="comment"></textarea>
+  <textarea class="form-control" rows="5" cols="80" name="comments"></textarea>
 </div>
 
 <div id="pieChart"></div>
