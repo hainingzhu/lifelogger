@@ -61,7 +61,7 @@ function updatePieChart() {
 	var chart = new CanvasJS.Chart("pieChart",
 	{
 		title:{
-			text: "How my time is spent in a week?",
+			text: "How my time is spent in a day?",
 			fontFamily: "arial black"
 		},
                 animationEnabled: true,
@@ -80,7 +80,7 @@ function updatePieChart() {
 			indexLabelFontColor: "MistyRose",       
 			indexLabelLineColor: "darkgrey", 
 			indexLabelPlacement: "inside", 
-			toolTipContent: "{name}: {y}hrs",
+			toolTipContent: "{name}: {y} mins",
 			showInLegend: true,
 			indexLabel: "#percent%", 
 			dataPoints: pieData
