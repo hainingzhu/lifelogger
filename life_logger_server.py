@@ -20,6 +20,7 @@ import json
 from functools import wraps
 
 from datetime import datetime
+from time import gmtime, strftime
 
 import os
 here = os.path.dirname(os.path.abspath(__file__))
@@ -110,6 +111,7 @@ def login(message=""):
 @app.route("/home")
 @requires_auth
 def index():
+    print session["uid"], "start at", strftime("%Y-%m-%d %H:%M:%S", gmtime())
     return render_template("index.html")
 
 
@@ -363,6 +365,7 @@ def refresh_fitbit_token():
 @app.route("/track_survey", methods=['POST'])
 @requires_auth
 def track_survey():
+    print session["uid"], "finished at", strftime("%Y-%m-%d %H:%M:%S", gmtime())
     # survey questions
     comments = request.form['comments']
     step = request.form.get("step")
