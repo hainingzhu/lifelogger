@@ -186,3 +186,9 @@ html, body {
 #dataTable select {
 	width: 100%;
 }
+
+#pieChart {
+	width: 50%;
+	float: right;
+	height: 300px;
+}
