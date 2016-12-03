@@ -326,6 +326,7 @@ function addRow() {
 
   for(var i=0; i<colCount; i++) {
 	var curCell = rowFields[i];
+	curCell.children[0].value = "";
 	curCell.children[0].name += rowCount;
 	if (i==3) {
 		$(curCell.children[0]).blur(checkTime_updatePie);
