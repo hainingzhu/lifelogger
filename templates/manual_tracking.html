@@ -1,29 +1,10 @@
 <html>
   <head>
     <title>Life Logger Manual Tracking Survey</title>
+	<link rel="stylesheet" href={{ url_for("static", filename="css/homepage_b.css") }}>
     <script src={{ url_for("static", filename="js/jquery.js") }}></script>
-
-    <SCRIPT language="javascript">
-    var rowId = 10;
-    function addRow() {
-
-	  var table = $('#dataTable');
-
-	  var rowCount = table[0].rows.length;
-	  var row = $("#row1").clone();
-	  var rowFields = row.children();
-	  var colCount = rowFields.length;
-
-	  for(var i=0; i<colCount; i++) {
-		var curCell = rowFields[i];
-		curCell.children[0].value = "";
-		curCell.children[0].name += rowCount;
-	  }
-	  
-	  table.append(row[0]);
-	}
-
-  </SCRIPT>
+	<script src={{ url_for("static", filename="js/retrieve_data_b.js") }}></script>
+	<script src={{ url_for("static", filename="js/canvasjs.min.js") }}></script>
   </head>
   <body>
     <!-- {{ message }} -->
@@ -238,7 +219,7 @@
       <tr>
         <TD><INPUT type="text" name="what_happen6"/></TD>
         <td> 
-            <select name="code">        
+            <select name="code6">        
                     <option value="Work">Work</option>
                     <option value="Leisure">Leisure</option>
                     <option value="Personal maintenance">Personal maintenance</option>
@@ -417,7 +398,7 @@
   <INPUT type="button" value="Add Row" onclick="addRow()" /> <BR>
 
    <p>Comment: Do you have any comments about your day?<BR>
-        <input type="text" id="comments" name="comments" <BR>
+        <textarea type="text" rows=6 cols=50 id="comments" name="comments"></textarea><BR>
       </p>
 
       <P>1. Can you guess how many steps did you walk today?<BR>
@@ -430,7 +411,7 @@
       <p>2. How many alcoholic beverages did you drink today?<BR>
         <input type="text" id="alcohol" name="alcohol" <BR>
       </p>
-
+		<div id="pieChart"></div>
       <p>3. How many cigarettes did you smoke today?<BR>
         <input type="text" id="cigarette" name="cigarette" <BR>
       </p>
