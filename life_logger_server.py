@@ -15,7 +15,7 @@ from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server, authorizationHeader
 import requests
 import sqlite3
-# import ssl
+import ssl
 import json
 from functools import wraps
 
@@ -25,8 +25,8 @@ from time import gmtime, strftime
 import os
 here = os.path.dirname(os.path.abspath(__file__))
 
-# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-# context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
 
 app = Flask(__name__)
@@ -35,6 +35,7 @@ app.secret_key = "lifelogger"
 DATABASE = here + '/db/lifelogger.db'
 SERVERNAME = "https://dsquare.ist.psu.edu/lifelogger/"
 DEVSERVERNAME = "https://98.235.161.247:9293/"
+SERVERNAME = DEVSERVERNAME
 
 
 rescuetime = rescuetime_oauth_server(app)
@@ -182,9 +183,29 @@ def get_moves_places(dateStr):
         url = "https://api.moves-app.com/api/1.1/user/places/daily/{0}?access_token={1}".format(
                 dateStr, session['moves_token'])
         print url
-        return requests.get(url).content
+        res = json.loads(requests.get(url).content)
+        res_dateStr = res[0]['date']
+        res_points = res[0]['segments']
+        respnd = []
+        for point in res_points:
+            ts = 0 if point['startTime'][0:8] < res_dateStr else int(point['startTime'][9:11])
+            es = 23 if point['endTime'][0:8] > res_dateStr else int(point['endTime'][9:11])
+            poi_label = reverseGeocoding(point['place']['location']['lat'], point['place']['location']['lon'])[0]
+            respnd.append([ts, es, poi_label])
+        return json.dumps(respnd)
+            
 
 
+
+def reverseGeocoding(lat, lon):
+    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={0},{1}&key=AIzaSyCExfI5XMCBLPBah6X-_oZj29pqWjaa3Ls".format(
+            lat, lon)
+    jsonStr = requests.get(url).content
+    res = json.loads(jsonStr)
+    addr = res['results'][0]['formatted_address']
+    addr_types = res['results'][0]['types']
+    addr_loc = res['results'][0]['geometry']['location']
+    return addr, addr_loc, addr_types
 
 
 
@@ -548,5 +569,5 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    #app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
+#    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
