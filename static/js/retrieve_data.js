@@ -124,48 +124,45 @@ function get_moves_places() {
 		url: SCRIPT_ROOT + "/moves_places/" + dateStr,
 		dataType: "json"
 	}).done(function(data) {
-		moves = data[0]['segments'];
-        if (moves == null) {
-            var map = new google.maps.Map($('#moveschart')[0], {
-                zoom: 12,
-                center: {lat: 40.794356, lng: -77.858171}
-            });
-        } else {
-            var places = [];
-            var place_titles = [];
-            var center = [0, 0];	// [lat, lng]
-            
-            for (var i = 0; i < moves.length; i++) {
-                pi = moves[i];
-                pi_lat = pi.place.location.lat;
-                pi_lon = pi.place.location.lon;
-                
-                li_item = ["Start time: ", pi.startTime, ", end time: ", pi.endTime, ", location: (", 
-                    pi_lat, ",", pi_lon, ")"].join('');
-                place_titles.push(li_item)
-                console.log(li_item)
-                
-                center[0] += pi_lat;
-                center[1] += pi_lon;
-                
-                places.push( [pi_lat, pi_lon] );
-            }
-            center[0] /= places.length;
-            center[1] /= places.length;
-            var map_center = {lat: center[0], lng: center[1]};
-            var map = new google.maps.Map($('#moveschart')[0], {
-                zoom: 12,
-                center: map_center
-            });
-            for (var i = 0; i < places.length; i++) {
-                var position = {lat: places[i][0], lng: places[i][1]};
-                var marker = new google.maps.Marker({
-                    position: position,
-                    map: map,
-                    title: place_titles[i]
-                });
-            }
-        }
+		moves = data;
+		moves_bar = [];
+		for (var i = 0; i < moves.length; i++) {
+			moves_bar[i] = {
+				x : 1,
+				y : [moves[i][0], moves[i][1]],
+				indexLabel : moves[i][2],
+				indexLabelPlacement : 'inside'
+			};
+		}
+		var chart = new CanvasJS.Chart("moveschart", {
+			title: {
+				text: "Moves -- Locations"
+			},
+			dataPointWidth: 120,
+			axisY: {
+				title: "Time by Hour",
+				minimum: 0,
+				maximum: 23,
+				interval: 1,
+				reversed: true
+			},
+			axisX: {
+				title: "Location",
+				minimum: 0.1,
+				maximum: 1.9,
+				interval: 1
+			},
+			data: [
+			{
+				type: "rangeColumn",
+				showInLegend: false,
+				dataPoints: moves_bar,
+				indexLabelFontColor: "black",
+				indexLabelFontSize: 16
+			}
+			]
+		});
+		chart.render();
 	});
 }
 
