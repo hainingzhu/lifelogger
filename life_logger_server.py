@@ -250,13 +250,16 @@ def get_rescuetime_token(token=None):
     return session['rescuetime_token']
 
 
-@app.route("/rescuetime_timechart")
-def rescuetime_timechart():
+@app.route("/rescuetime_timechart/<dateStr>")
+def rescuetime_timechart(dateStr):
+    """
+    dateStr is a string with format 'yyyy-MM-dd'
+    """
     if 'rescuetime_token' not in session:
         return redirect(url_for("rescuetime_login"))
     else:
-        url = "https://www.rescuetime.com/api/oauth/data?access_token={0}&pv=interval&format=json".format(
-            session['rescuetime_token'])
+        url = "https://www.rescuetime.com/api/oauth/data?access_token={0}&pv=interval&format=json&rb={1}&re={1}".format(
+            session['rescuetime_token'], dateStr)
         print url
         response = requests.get(url).json()
         activities = response['rows']

@@ -7,7 +7,15 @@ var pie = {"Work": 0, "Leisure": 0, "Personal maintenance": 0, "Other": 24*60};
 
 $('document').ready(function(){
 	// setup the date time picker.
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+		dateFormat: "DD, d MM, yy",
+		onSelect: function(selected, evnt) {
+			get_moves_places();
+			get_rescutime_timechart();
+			get_fitbit_timechart();
+		}
+	});
+	$("#datepicker").datepicker("setDate", new Date());
 	get_moves_places();
 	get_rescutime_timechart();
 	get_fitbit_timechart();
@@ -15,6 +23,7 @@ $('document').ready(function(){
 		$(ele).blur(checkTime_updatePie);
 	});
 	updatePieChart();
+	$("input[name='time_began']").val("00:00");
 });
 
 
@@ -105,7 +114,7 @@ If delimiter is '', return YYYYMMDD, used in Moves API.
 If delimiter is '-', return YYYY-MM-DD, used in Fitbit API.
 */
 function getDate(delimiter) {
-	var d = new Date();
+	var d = $("#datepicker").datepicker("getDate");
 	var y = d.getFullYear();
 	var mm = (d.getMonth() + 1).toString();
 	if (mm.length == 1)
@@ -127,18 +136,20 @@ function get_moves_places() {
 		moves = data;
 		moves_bar = [];
 		for (var i = 0; i < moves.length; i++) {
-			moves_bar[i] = {
-				x : 1,
-				y : [moves[i][0], moves[i][1]],
-				indexLabel : moves[i][2],
-				indexLabelPlacement : 'inside'
-			};
+			if (moves[i][0] < moves[i][1]) {
+				moves_bar.push({
+					x : 1,
+					y : [moves[i][0], moves[i][1]],
+					indexLabel : moves[i][2],
+					indexLabelPlacement : 'inside'
+				});
+			}
 		}
 		var chart = new CanvasJS.Chart("moveschart", {
 			title: {
 				text: "Moves -- Locations"
 			},
-			dataPointWidth: 120,
+			dataPointWidth: 200,
 			axisY: {
 				title: "Time by Hour",
 				minimum: 0,
@@ -158,7 +169,8 @@ function get_moves_places() {
 				showInLegend: false,
 				dataPoints: moves_bar,
 				indexLabelFontColor: "black",
-				indexLabelFontSize: 16
+				indexLabelFontSize: 16,
+				color: "#a4ef83"
 			}
 			]
 		});
@@ -168,8 +180,9 @@ function get_moves_places() {
 
 
 function get_rescutime_timechart() {
+	var dateStr = getDate("-");
 	$.ajax({
-		url: SCRIPT_ROOT + "/rescuetime_timechart",
+		url: SCRIPT_ROOT + "/rescuetime_timechart/" + dateStr,
 		dataType: "json"
 	}).done(function(data) {
 		rescuetime = data;
