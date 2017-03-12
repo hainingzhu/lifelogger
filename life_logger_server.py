@@ -19,7 +19,7 @@ import ssl
 import json
 from functools import wraps
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import gmtime, strftime
 
 import os
@@ -187,11 +187,12 @@ def get_moves_places(dateStr):
         res_dateStr = res[0]['date']
         res_points = res[0]['segments']
         respnd = []
-        for point in res_points:
-            ts = 0 if point['startTime'][0:8] < res_dateStr else int(point['startTime'][9:11])
-            es = 23 if point['endTime'][0:8] > res_dateStr else int(point['endTime'][9:11])
-            poi_label = reverseGeocoding(point['place']['location']['lat'], point['place']['location']['lon'])[0]
-            respnd.append([ts, es, poi_label])
+        if res_points is not None:
+            for point in res_points:
+                ts = 0 if point['startTime'][0:8] < res_dateStr else int(point['startTime'][9:11])
+                es = 23 if point['endTime'][0:8] > res_dateStr else int(point['endTime'][9:11])
+                poi_label = reverseGeocoding(point['place']['location']['lat'], point['place']['location']['lon'])[0]
+                respnd.append([ts, es, poi_label])
         return json.dumps(respnd)
             
 
@@ -286,6 +287,37 @@ def rescuetime_timechart(dateStr):
         tc[24] = {'totalProductive': sumProd, 'totalDistracting': sumDist}
         return json.dumps(tc)
 
+
+@app.route("/pastweek")
+def pastweek():
+    """
+    Get the date range from request parameters
+    """
+    rb = request.args.get('startDate')
+    re = request.args.get('endDate')
+    url = "https://www.rescuetime.com/api/oauth/productivity_data?access_token={0}&pv=interval&format=json&rb={1}&re={2}&rs=day".format(
+            session['rescuetime_token'], rb, re)
+    response = requests.get(url).json()
+    # generate keys
+    start = datetime.strptime(rb, "%Y-%m-%d")
+    end = datetime.strptime(re, "%Y-%m-%d")
+    step = timedelta(days=1)
+    dateLabels = []
+    timeSeries = []
+    while start <= end:
+        dateLabels.append(start.strftime("%Y-%m-%d"))
+        timeSeries.append([0,0])
+        start += step
+    # fill in times
+    dailyTimes = response["rows"]
+    for row in dailyTimes:
+        date = row[0][0:10]
+        idx = dateLabels.index(date)
+        if row[3] >= 0: # productive time
+            timeSeries[idx][0] += row[1] / 60
+        else: # distractive time
+            timeSeries[idx][1] += row[1] / 60
+    return json.dumps({"dateLabels": dateLabels, "timeSeries": timeSeries})
 
 
 

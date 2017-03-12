@@ -4,6 +4,7 @@ var fitbit;
 var focus = 0;
 var rowId = 10;
 var pie = {"Work": 0, "Leisure": 0, "Personal maintenance": 0, "Other": 24*60};
+var pastweek;
 
 $('document').ready(function(){
 	// setup the date time picker.
@@ -13,12 +14,14 @@ $('document').ready(function(){
 			get_moves_places();
 			get_rescutime_timechart();
 			get_fitbit_timechart();
+			pastWeek_timeSeries();
 		}
 	});
 	$("#datepicker").datepicker("setDate", new Date());
 	get_moves_places();
 	get_rescutime_timechart();
 	get_fitbit_timechart();
+	pastWeek_timeSeries();
 	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
 		$(ele).blur(checkTime_updatePie);
 	});
@@ -112,9 +115,15 @@ function duration(startTime, endTime) {
 Return the current date as delimiter separated string.
 If delimiter is '', return YYYYMMDD, used in Moves API.
 If delimiter is '-', return YYYY-MM-DD, used in Fitbit API.
+
+offset is the number of days to offset by today. 
+0 - today
+-1 is yesterday
+1 is tomorrow
 */
-function getDate(delimiter) {
+function getDate(delimiter, offset) {
 	var d = $("#datepicker").datepicker("getDate");
+	d.setDate(d.getDate() + offset);
 	var y = d.getFullYear();
 	var mm = (d.getMonth() + 1).toString();
 	if (mm.length == 1)
@@ -128,7 +137,7 @@ function getDate(delimiter) {
 
 
 function get_moves_places() {
-	var dateStr = getDate("");
+	var dateStr = getDate("", 0);
 	$.ajax({
 		url: SCRIPT_ROOT + "/moves_places/" + dateStr,
 		dataType: "json"
@@ -169,7 +178,7 @@ function get_moves_places() {
 				showInLegend: false,
 				dataPoints: moves_bar,
 				indexLabelFontColor: "black",
-				indexLabelFontSize: 16,
+				indexLabelFontSize: 10,
 				color: "#a4ef83"
 			}
 			]
@@ -180,7 +189,7 @@ function get_moves_places() {
 
 
 function get_rescutime_timechart() {
-	var dateStr = getDate("-");
+	var dateStr = getDate("-", 0);
 	$.ajax({
 		url: SCRIPT_ROOT + "/rescuetime_timechart/" + dateStr,
 		dataType: "json"
@@ -258,7 +267,7 @@ function get_rescutime_timechart() {
 
 
 function get_fitbit_timechart() {
-	var dateStr = getDate('-');
+	var dateStr = getDate('-', 0);
 	$.ajax({
 		url: SCRIPT_ROOT + "/fitbit_activity/" + dateStr,
 		dataType: "json"
@@ -313,6 +322,70 @@ function get_fitbit_timechart() {
 				color:"#58D68D",
 				dataPoints: intraday_steps,
 				
+			}
+			]
+		});
+		chart.render();
+	});
+}
+
+
+
+function pastWeek_timeSeries() {	
+	rb = getDate("-", -7);
+	re = getDate("-", 0);
+	$.ajax({
+		url: SCRIPT_ROOT + "/pastweek",
+		data: {
+			startDate: rb,
+			endDate: re
+		},
+		dataType: "json"
+	}).done(function(data) {
+		pastweek = data;
+		productive_ts = [];
+		distractive_ts = [];
+		for (var i = 0; i < data.dateLabels.length; i++) {
+			productive_ts.push({
+				x: new Date(data.dateLabels[i]),
+				y: data.timeSeries[i][0]
+			});
+			
+			distractive_ts.push({
+				x: new Date(data.dateLabels[i]),
+				y: data.timeSeries[i][1]
+			});
+		}
+		var chart = new CanvasJS.Chart("pastweek", {
+			title: {
+				text: "Past 7 days"
+			},legend: {
+				horizontalAlign: "center",
+				verticalAlign: "bottom",
+				fontSize: 15,
+				fontFamily: "Lucida Sans Unicode"
+			},
+			axisX: {
+				title: "Date"
+			},
+			axisY: {
+				title: 'Time (minutes)'
+			},
+			data: [
+			{
+				type: "line",
+				showInLegend: true,
+				lineThickness:3,
+				legendText: "Productive Time",
+				color:"#5DADE2",
+				dataPoints: productive_ts,
+			}, {
+				type: "line",
+				showInLegend: true,
+				lineThickness:3,
+				legendText: "Distractive Time",
+				color:"#EF1903",
+				dataPoints: distractive_ts,
 			}
 			]
 		});
