@@ -66,10 +66,10 @@
 	</div>
 </div>
 
-<div id=survey>
 
-
-  <h2>[Instruction]</h2>
+<div id=rightside>
+	<div id=survey>
+		<h2>[Instruction]</h2>
   <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
   
   <ul>
@@ -93,15 +93,15 @@
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
-	<TABLE id="dataTable" width="350px" border="1">
-      <tr>
-        <th>What happened?</th>
-        <th>Code</th>
-        <th>Time began</th>
-        <th>Time ended</th>
-        <th>Where?</th>
-        <th>What did you feel?</th>
-        <th>Stress</th>
+	<TABLE id="dataTable" width="40%">
+     <tr>
+        <th width="15%" height="30px">What happened?</th>
+        <th width="10%">Code</th>
+        <th width="10%">Time began</th>
+        <th width="10%">Time ended</th>
+        <th width="10%">Where?</th>
+        <th width="10%">What did you feel?</th>
+        <th width="10%">Stress</th>
       </tr>
       <tr id=row1>
         <TD><INPUT type="text" name="what_happen"></input></TD>
@@ -453,7 +453,7 @@
 
   <!-- <button id="export-btn" class="btn btn-primary">Add Row</button> -->
   <br>
-  <INPUT type="button" value="Add Row" onclick="addRow()" /> <BR>
+  <INPUT id="button" type="button" value="Add Row" onclick="addRow()" /> <BR>
   
   
   <div class="form-group" id = "comment"> <br>
@@ -499,12 +499,14 @@
   </p>
 
   <br>
-  <input type="submit" value="Submit">
+  <input id="button" type="submit" value="Submit">
   </form>
   </div>
   
   <p id="export"></p>
+	</div>
 </div>
+
  
 </body>
 </html>

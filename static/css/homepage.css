@@ -1,16 +1,19 @@
 html, body {
 	height: 100%;
+	background-color: #eff4fc;
 }
 
 #header {
-	height: 100px;
+	height: 80px;
 	width: 100%;
+	background-color: #ffffff;
 }
 
 #date {
 	height: 100%;
 	float: left;
-	padding-right: 20px;
+	padding-right: 80px;
+	padding-left: 20px;
 }
 
 #datepicker {
@@ -19,7 +22,7 @@ html, body {
 }
 
 #loginapp {
-	height: 100%;
+	height: 80%;
 	width: 40%;
 	float: left;
 }
@@ -35,20 +38,20 @@ html, body {
 #toprightpanel {
 	height: 100%;
 	width: 20%;
-	float: left;
+	float: right;
 }
   
 #app {
 	height: 100%;
-	width: 96%;
+	width: 100%;
 	padding: 0px;
 }
 
 
 #pastweek {
 	height: 30%;
-	width: 100%;
-	padding: 0px;
+	width: 99%;
+	padding-top: 5%;
 }
 
   
@@ -62,16 +65,19 @@ html, body {
 #moveschart {
 	width: 100%;
 	height: 80%;
+	padding-bottom: 5%;
 }
 
 
 #movesfootnote {
 	width: 100%;
 	height: 20%;
+	background-color: #ffffff;
+	padding-bottom: 5%;
 }
 
 #fitbit {
-	width: 32%;
+	width: 33%;
 	height: 100%;
 	float: left;
 	padding-right: 1%;
@@ -80,6 +86,7 @@ html, body {
 #fitbitchart {
 	width: 100%;
 	height: 80%;
+	padding-bottom: 5%;
 }
 
 #fitbitfootnote {
@@ -89,6 +96,8 @@ html, body {
 	width: 100%;
 	height: 20%;
 	font-weight: normal;
+	background-color: #ffffff;
+	padding-bottom: 5%;
 }
 
 #fitbitfootnote h2{
@@ -108,6 +117,7 @@ html, body {
 #rescuetimechart {
 	width: 100%;
 	height: 80%;
+	padding-bottom: 5%;
 }
 
 #rescuetimefootnote {
@@ -116,6 +126,8 @@ html, body {
 	text-indent:40px;
 	width: 100%;
 	height: 20%;
+	background-color: #ffffff;
+	padding-bottom: 5%;
 }
 
 #rescuetimefootnote h2{
@@ -132,30 +144,35 @@ html, body {
 
 #dataTable{
 	width: 100%;
-	font-family: Avenir !important;
+	font-family: Avenir;
 	font-size: 12px;
+	border-collapse: collapse;
 }
 
 #dataTable td{
-	width: 50px;
+	text-align: center;
 }
 
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
 
 #data {
 	width: 44%;
 	padding: 10px;
-	padding-left: 0px;
+	padding-left: 0;
 	padding-right: 0.5%;
 	float: left;
 	height: 100%;
 }
 
 #survey {
-	width: 54%;
-	float: left;
 	padding: 10px;
-	padding-left: 0px;
-	padding-right: 0.5%;
+	padding-left: 2%;
+	background-color: #ffffff;
 }
 
 #question p {
@@ -172,6 +189,7 @@ html, body {
 #survey h2{
 	font-family: Avenir; 
 	font-size: 14px;
+	padding-top:0px;
 }
 #survey ul{
 	font-family: Avenir; 
@@ -199,4 +217,25 @@ html, body {
 	width: 50%;
 	float: right;
 	height: 300px;
+}
+#rightside{
+	width: 55.5%;
+	float: right;
+	background-color: #eff4fc;
+	padding: 10px;
+	padding-left: 0;
+	padding-right: 0;
+}
+#button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+	font-family: Avenir; 
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
