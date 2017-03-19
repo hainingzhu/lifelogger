@@ -153,7 +153,7 @@ function get_moves_places() {
 				    y : [moves[i][0], moves[i][1]],
 				    loc: moves[i][2],
    				    indexLabelFormatter : function (e) {
-					return formatHour_24to12(e.dataPoint.y[1-e.index]);
+					    return formatHour_24to12(e.dataPoint.y[1-e.index]);
 				    },
 				    indexLabelPlacement : 'inside'
 				});
