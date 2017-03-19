@@ -87,12 +87,15 @@
     <li>Code for <em><u>feeling</u></em>: <em><u>1. Very unhappy, 2. Unhappy, 3. Happy, 4. Very happy</u></em></li>
     <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
   </ul>
+
   
-  <div id="table">
   <form action={{ url_for("track_survey") }} method=post>
+    
+  <div id="table">
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
-    <!-- <table id="table" border=”1″ style=”width:300px”> -->
+<!-- <table id="table" border=”1″ style=”width:300px”> -->
+<input id=submit_date type=hidden name=submit_date value=""/>
 	<TABLE id="dataTable" width="40%">
      <tr>
         <th width="15%" height="30px">What happened?</th>

@@ -422,6 +422,7 @@ def refresh_fitbit_token():
 @requires_auth
 def track_survey():
     print session["uid"], "finished at", strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    now = request.form.get("submit_date")
     # survey questions
     comments = request.form['comments']
     step = request.form.get("step")
@@ -434,8 +435,6 @@ def track_survey():
     other_name = request.form.get("other_name")
     percent_other = request.form.get("percent_other")
     feedback = request.form.get("feedback")
-
-    now = datetime.utcnow()
 
     what_happen = request.form.get('what_happen')
     code = request.form.get("code")

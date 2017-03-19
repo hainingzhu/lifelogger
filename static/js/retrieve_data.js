@@ -14,14 +14,16 @@ $('document').ready(function(){
 			get_moves_places();
 			get_rescutime_timechart();
 			get_fitbit_timechart();
-			pastWeek_timeSeries();
+		    pastWeek_timeSeries();
+		    $("#submit_date").val(getDate("-", 0));
 		}
 	});
 	$("#datepicker").datepicker("setDate", new Date());
 	get_moves_places();
 	get_rescutime_timechart();
 	get_fitbit_timechart();
-	pastWeek_timeSeries();
+    pastWeek_timeSeries();
+    $("#submit_date").val(getDate("-", 0));
 	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
 		$(ele).blur(checkTime_updatePie);
 	});
