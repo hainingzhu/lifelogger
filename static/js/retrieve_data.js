@@ -178,8 +178,8 @@ function get_moves_places() {
 				showInLegend: false,
 				dataPoints: moves_bar,
 				indexLabelFontColor: "black",
-				indexLabelFontSize: 10,
-				color: "#a4ef83"
+				indexLabelFontSize: 10//,
+				//color: "#a4ef83"
 			}
 			]
 		});

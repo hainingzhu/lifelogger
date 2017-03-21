@@ -15,7 +15,7 @@ from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server, authorizationHeader
 import requests
 import sqlite3
-import ssl
+# import ssl
 import json
 from functools import wraps
 
@@ -25,8 +25,8 @@ from time import gmtime, strftime
 import os
 here = os.path.dirname(os.path.abspath(__file__))
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
+#context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+#context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ app.secret_key = "lifelogger"
 DATABASE = here + '/db/lifelogger.db'
 SERVERNAME = "https://dsquare.ist.psu.edu/lifelogger/"
 DEVSERVERNAME = "https://98.235.161.247:9293/"
-SERVERNAME = DEVSERVERNAME
+#SERVERNAME = DEVSERVERNAME
 
 
 rescuetime = rescuetime_oauth_server(app)
@@ -604,5 +604,5 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-#    app.run(debug=True)
-    app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
+    app.run(debug=True)
+    # app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
