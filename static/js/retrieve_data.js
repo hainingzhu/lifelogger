@@ -14,14 +14,16 @@ $('document').ready(function(){
 			get_moves_places();
 			get_rescutime_timechart();
 			get_fitbit_timechart();
-			pastWeek_timeSeries();
+		    pastWeek_timeSeries();
+		    $("#submit_date").val(getDate("-", 0));
 		}
 	});
 	$("#datepicker").datepicker("setDate", new Date());
 	get_moves_places();
 	get_rescutime_timechart();
 	get_fitbit_timechart();
-	pastWeek_timeSeries();
+    pastWeek_timeSeries();
+    $("#submit_date").val(getDate("-", 0));
 	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
 		$(ele).blur(checkTime_updatePie);
 	});
@@ -147,10 +149,13 @@ function get_moves_places() {
 		for (var i = 0; i < moves.length; i++) {
 			if (moves[i][0] < moves[i][1]) {
 				moves_bar.push({
-					x : 1,
-					y : [moves[i][0], moves[i][1]],
-					indexLabel : moves[i][2],
-					indexLabelPlacement : 'inside'
+				    x : 1,
+				    y : [moves[i][0], moves[i][1]],
+				    loc: moves[i][2],
+   				    indexLabelFormatter : function (e) {
+					    return formatHour_24to12(e.dataPoint.y[1-e.index]);
+				    },
+				    indexLabelPlacement : 'inside'
 				});
 			}
 		}
@@ -164,7 +169,10 @@ function get_moves_places() {
 				minimum: 0,
 				maximum: 23,
 				interval: 1,
-				reversed: true
+				reversed: true,
+				labelFormatter: function (e) {
+				    return formatHour_24to12(e.value);
+				}
 			},
 			axisX: {
 				title: "Location",
@@ -172,6 +180,9 @@ function get_moves_places() {
 				maximum: 1.9,
 				interval: 1
 			},
+		    toolTip: {
+			content: "{loc}"
+		    },
 			data: [
 			{
 				type: "rangeColumn",
@@ -185,6 +196,20 @@ function get_moves_places() {
 		});
 		chart.render();
 	});
+}
+
+
+function formatHour_24to12(i) {
+    var time_surfix;
+    if (i>=12) {
+	time_surfix = "pm";
+    } else {
+	time_surfix = "am";
+    }
+    var lb = i%12;
+    if (i == 12)
+	lb = 12;
+    return lb + ":00 " + time_surfix;
 }
 
 
@@ -204,23 +229,13 @@ function get_rescutime_timechart() {
 		productivePoints = [];
 		distractingPoints = [];
 		for (var i = 0; i < data.length; i++) {
-			var time_surfix;
-			var lb = i%12;
-			if (i == 12) {
-				lb = 12;
-			}
-			if (i>=12) {
-				time_surfix = "pm";
-			} else {
-				time_surfix = "am";
-			}
 			productivePoints[i] = {
 				y: data[i]['productive'], 
-				label: lb + ":00 " + time_surfix
+			    label: formatHour_24to12(i)
 			};
 			distractingPoints[i] = {
 				y: data[i]['distracting'],
-				label: lb + ":00 " + time_surfix
+			    label: formatHour_24to12(i)
 			};
 		}
 		// barplot with CanvasJS
