@@ -147,7 +147,7 @@ function get_moves_places() {
 		moves = data;
 		moves_bar = [];
 		
-		var colorSet = ["#4661EE", "#EC5657", "#1BCDD1", "#8FAABB", "#B08BEB", "#3EA0DD", "#F5A52A", "#23BFAA", "#FAA586", "#EB8CC6"];
+		var colorSet = ["#23FFC8", "#20E2E8", "#30C2FF", "#2079E8", "#234BFF", "#246678", "#98EAEA", "#3DA832",  "#45CCFF", "#ABDD32"];
 		var dict_loc_color = {};
 		var dict_len = 0;
 		for (var i = 0; i < moves.length; i++) {
@@ -160,7 +160,6 @@ function get_moves_places() {
 					color_idx = dict_len;
 					dict_len += 1;
 				}
-				console.log(moves[i][2] + color_idx);
 				moves_bar.push({
 				    x : 1,
 				    y : [moves[i][0], moves[i][1]],
