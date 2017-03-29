@@ -11,19 +11,11 @@ $('document').ready(function(){
     $( "#datepicker" ).datepicker({
 		dateFormat: "DD, d MM, yy",
 		onSelect: function(selected, evnt) {
-			get_moves_places();
-			get_rescutime_timechart();
-			get_fitbit_timechart();
-		    pastWeek_timeSeries();
-		    $("#submit_date").val(getDate("-", 0));
+			refreshPage();
 		}
 	});
 	$("#datepicker").datepicker("setDate", new Date());
-	get_moves_places();
-	get_rescutime_timechart();
-	get_fitbit_timechart();
-    pastWeek_timeSeries();
-    $("#submit_date").val(getDate("-", 0));
+	refreshPage();
 	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
 		$(ele).blur(checkTime_updatePie);
 	});
@@ -31,6 +23,15 @@ $('document').ready(function(){
 	$("input[name='time_began']").val("00:00");
 });
 
+
+function refreshPage() {
+	get_moves_places();
+	get_rescutime_timechart();
+	get_fitbit_timechart();
+	pastWeek_timeSeries();
+	pastweek_survey_timeSeries();
+	$("#submit_date").val(getDate("-", 0));
+}
 
 /*
 Call back function for one entry is entered.
@@ -386,7 +387,7 @@ function pastWeek_timeSeries() {
 		}
 		var chart = new CanvasJS.Chart("pastweek", {
 			title: {
-				text: "Past 7 days"
+				text: "Past 7 days' productivity from Rescuetime"
 			},legend: {
 				horizontalAlign: "center",
 				verticalAlign: "bottom",
@@ -422,6 +423,84 @@ function pastWeek_timeSeries() {
 	});
 }
 
+
+
+function pastweek_survey_timeSeries() {
+	rb = getDate("-", -6);
+	re = getDate("-", 0);
+	$.ajax({
+		url: SCRIPT_ROOT + "/pastweek_survey",
+		data: {
+			startDate: rb,
+			endDate: re
+		},
+		dataType: "json"
+	}).done(function(data) {
+		pastweek = data;
+		console.log(pastweek);
+		academic_ts = [];
+		social_ts = [];
+		personal_ts = [];
+		for (var i = 0; i < data.dateLabels.length; i++) {
+			academic_ts.push({
+				x: new Date(data.dateLabels[i]),
+				y: data.timeSeries[i][0]
+			});
+			
+			social_ts.push({
+				x: new Date(data.dateLabels[i]),
+				y: data.timeSeries[i][1]
+			});
+			
+			personal_ts.push({
+				x: new Date(data.dateLabels[i]),
+				y: data.timeSeries[i][2]
+			});
+		}
+		var chart = new CanvasJS.Chart("pastweek-survey", {
+			title: {
+				text: "Past 7 days' percentage of time spent"
+			},legend: {
+				horizontalAlign: "center",
+				verticalAlign: "bottom",
+				fontSize: 15,
+				fontFamily: "Lucida Sans Unicode"
+			},
+			axisX: {
+				title: "Date",
+				valueFormatString: "MM/DD"
+			},
+			axisY: {
+				title: 'Percentage (x100%)'
+			},
+			data: [
+			{
+				type: "line",
+				showInLegend: true,
+				lineThickness:3,
+				legendText: "Work",
+				color:"#5DADE2",
+				dataPoints: academic_ts,
+			}, {
+				type: "line",
+				showInLegend: true,
+				lineThickness:3,
+				legendText: "Leisure",
+				color:"#EF1903",
+				dataPoints: social_ts,
+			}, {
+				type: "line",
+				showInLegend: true,
+				lineThickness:3,
+				legendText: "Personal maintenance",
+				color: "#4B0082",
+				dataPoints: personal_ts,
+			}
+			]
+		});
+		chart.render();
+	});
+}
 
 
 /*

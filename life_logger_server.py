@@ -15,7 +15,7 @@ from flask import Flask, render_template, session, request, url_for, redirect, g
 from oauth import moves_oauth_server, rescuetime_oauth_server, fitbit_oauth_server, authorizationHeader
 import requests
 import sqlite3
-# import ssl
+import ssl
 import json
 from functools import wraps
 
@@ -25,8 +25,8 @@ from time import gmtime, strftime
 import os
 here = os.path.dirname(os.path.abspath(__file__))
 
-#context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-#context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('ssl-key/domain.crt', 'ssl-key/domain.key')
 
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ app.secret_key = "lifelogger"
 DATABASE = here + '/db/lifelogger.db'
 SERVERNAME = "https://dsquare.ist.psu.edu/lifelogger/"
 DEVSERVERNAME = "https://98.235.161.247:9293/"
-#SERVERNAME = DEVSERVERNAME
+SERVERNAME = DEVSERVERNAME
 
 
 rescuetime = rescuetime_oauth_server(app)
@@ -417,7 +417,15 @@ def refresh_fitbit_token():
     db.commit()
     return resp
     
-    
+
+
+"""
+========================================
+Survey
+1. Update survey data into database
+2. past week line graph
+======================================== 
+"""    
 @app.route("/track_survey", methods=['POST'])
 @requires_auth
 def track_survey():
@@ -463,6 +471,36 @@ def track_survey():
 
         db.commit()
         return "Submit successfully. Thank you!"
+    except sqlite3.Error as er:
+        return er.message
+
+
+@app.route("/pastweek_survey")
+@requires_auth
+def past_week_survey_linegraph():
+    rb = request.args.get('startDate')
+    re = request.args.get('endDate')
+
+    start = datetime.strptime(rb, "%Y-%m-%d")
+    end = datetime.strptime(re, "%Y-%m-%d")
+    step = timedelta(days=1)
+    dateLabels = []
+    timeSeries = []
+        
+    try:
+        db = get_db()
+        while start <= end:
+            curDate = start.strftime("%Y-%m-%d")
+            dateLabels.append(curDate)
+            start += step
+            res = db.execute("select percent_academic, percent_social, percent_personal from auto_track_survey where uid=? and submit_date=?", (session['uid'], curDate))
+            r = res.fetchone()
+            if r is None:
+                timeSeries.append([0,0,0])
+            else:
+                timeSeries.append([float(i) if i else 0 for i in r])
+            
+        return json.dumps({"dateLabels": dateLabels, "timeSeries": timeSeries})
     except sqlite3.Error as er:
         return er.message
 
@@ -603,5 +641,5 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    # app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)
+#    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)

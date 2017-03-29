@@ -54,6 +54,12 @@ html, body {
 	padding-top: 5%;
 }
 
+#pastweek-survey {
+	height: 200px;
+	width: 99%;
+	padding-top: 5%;
+}
+
   
 #moves {
 	width: 32%;
