@@ -347,7 +347,7 @@ function get_fitbit_timechart() {
 
 
 function pastWeek_timeSeries() {	
-	rb = getDate("-", -7);
+	rb = getDate("-", -6);
 	re = getDate("-", 0);
 	$.ajax({
 		url: SCRIPT_ROOT + "/pastweek",
@@ -381,7 +381,8 @@ function pastWeek_timeSeries() {
 				fontFamily: "Lucida Sans Unicode"
 			},
 			axisX: {
-				title: "Date"
+				title: "Date",
+				valueFormatString: "MM/DD"
 			},
 			axisY: {
 				title: 'Time (minutes)'
