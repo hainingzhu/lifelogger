@@ -146,8 +146,21 @@ function get_moves_places() {
 	}).done(function(data) {
 		moves = data;
 		moves_bar = [];
+		
+		var colorSet = ["#4661EE", "#EC5657", "#1BCDD1", "#8FAABB", "#B08BEB", "#3EA0DD", "#F5A52A", "#23BFAA", "#FAA586", "#EB8CC6"];
+		var dict_loc_color = {};
+		var dict_len = 0;
 		for (var i = 0; i < moves.length; i++) {
 			if (moves[i][0] < moves[i][1]) {
+				var color_idx;
+				if (moves[i][2] in dict_loc_color) {
+					color_idx = dict_loc_color[moves[i][2]];
+				} else {
+					dict_loc_color[moves[i][2]] = dict_len;
+					color_idx = dict_len;
+					dict_len += 1;
+				}
+				console.log(moves[i][2] + color_idx);
 				moves_bar.push({
 				    x : 1,
 				    y : [moves[i][0], moves[i][1]],
@@ -155,7 +168,8 @@ function get_moves_places() {
    				    indexLabelFormatter : function (e) {
 					    return formatHour_24to12(e.dataPoint.y[1-e.index]);
 				    },
-				    indexLabelPlacement : 'inside'
+				    indexLabelPlacement : 'inside',
+					color: colorSet[color_idx]
 				});
 			}
 		}
