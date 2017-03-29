@@ -396,7 +396,7 @@ function pastWeek_timeSeries() {
 			},
 			axisX: {
 				title: "Date",
-				valueFormatString: "MM/DD"
+				valueFormatString: "DDD"
 			},
 			axisY: {
 				title: 'Time (minutes)'
@@ -468,7 +468,7 @@ function pastweek_survey_timeSeries() {
 			},
 			axisX: {
 				title: "Date",
-				valueFormatString: "MM/DD"
+				valueFormatString: "DDD"
 			},
 			axisY: {
 				title: 'Percentage (x100%)'
