@@ -4,11 +4,40 @@ var pie = {"Work": 0, "Leisure": 0, "Personal maintenance": 0, "Other": 24*60};
 
 
 $('document').ready(function(){
+	$( "#datepicker" ).datepicker({
+		dateFormat: "DD, d MM, yy",
+		onSelect: function(selected, evnt) {
+			refreshPage();
+		}
+	});
+	$("#datepicker").datepicker("setDate", new Date());
+	refreshPage();
+	
+	
 	$("input[type='time'][name^='time_end']").each(function(idx, ele) {
 		$(ele).blur(checkTime_updatePie);
 	});
 	updatePieChart();
 });
+
+function refreshPage() {
+	$("#submit_date").val(getDate("-", 0));
+}
+
+
+function getDate(delimiter, offset) {
+	var d = $("#datepicker").datepicker("getDate");
+	d.setDate(d.getDate() + offset);
+	var y = d.getFullYear();
+	var mm = (d.getMonth() + 1).toString();
+	if (mm.length == 1)
+		mm = '0' + mm
+	var dd = d.getDate().toString();
+	if (dd.length == 1)
+		dd = '0' + dd
+	dateStr = [y, mm, dd].join(delimiter);
+	return dateStr;
+}
 
 
 

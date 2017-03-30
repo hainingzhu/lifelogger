@@ -591,7 +591,7 @@ def track_survey_manual():
     other_name = request.form.get("other_name")
     percent_other = request.form.get("percent_other")
 
-    now = datetime.utcnow()
+    now = request.form.get("submit_date")
 
     what_happen = request.form.get('what_happen')
     code = request.form.get("code")

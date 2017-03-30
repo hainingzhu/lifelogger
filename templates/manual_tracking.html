@@ -1,12 +1,17 @@
 <html>
   <head>
     <title>Life Logger Manual Tracking Survey</title>
+	<link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css") }}>
 	<link rel="stylesheet" href={{ url_for("static", filename="css/homepage_b.css") }}>
     <script src={{ url_for("static", filename="js/jquery.js") }}></script>
+	<script src={{ url_for("static", filename="js/jquery-ui.js") }}></script>
 	<script src={{ url_for("static", filename="js/retrieve_data_b.js") }}></script>
 	<script src={{ url_for("static", filename="js/canvasjs.min.js") }}></script>
   </head>
   <body>
+	<div id=date>
+		<p>Date: <input type="text" id="datepicker"></p>
+	</div>
     <!-- {{ message }} -->
     <div class="container">
 
@@ -29,8 +34,9 @@
     <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
   </ul>
   
+  <form action={{ url_for("track_survey_manual") }} method=post >
+  <input id=submit_date type=hidden name=submit_date value=""/>
   <div id="table">
-  <form action={{ url_for("track_survey_manual") }} method=post>
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
