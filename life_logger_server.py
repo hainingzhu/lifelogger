@@ -19,7 +19,7 @@ import ssl
 import json
 from functools import wraps
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import gmtime, strftime
 
 import os
@@ -34,7 +34,8 @@ app.secret_key = "lifelogger"
 
 DATABASE = here + '/db/lifelogger.db'
 SERVERNAME = "https://dsquare.ist.psu.edu/lifelogger/"
-DEVSERVERNAME = "https://98.235.161.247:9293/"
+DEVSERVERNAME = "https://174.59.223.235:9293/"
+SERVERNAME = DEVSERVERNAME
 
 
 rescuetime = rescuetime_oauth_server(app)
@@ -137,7 +138,7 @@ def moves_login():
     r = res.fetchone()
     if r is None:
         print "Authentication on Moves server"
-        return moves.authorize(callback= DEVSERVERNAME + "moves_oauth_accept")
+        return moves.authorize(callback= SERVERNAME + "moves_oauth_accept")
     else:
         session['moves_token'] = r[1]
         session['moves_user_id'] = r[2]
@@ -182,9 +183,30 @@ def get_moves_places(dateStr):
         url = "https://api.moves-app.com/api/1.1/user/places/daily/{0}?access_token={1}".format(
                 dateStr, session['moves_token'])
         print url
-        return requests.get(url).content
+        res = json.loads(requests.get(url).content)
+        res_dateStr = res[0]['date']
+        res_points = res[0]['segments']
+        respnd = []
+        if res_points is not None:
+            for point in res_points:
+                ts = 0 if point['startTime'][0:8] < res_dateStr else int(point['startTime'][9:11])
+                es = 23 if point['endTime'][0:8] > res_dateStr else int(point['endTime'][9:11])
+                poi_label = reverseGeocoding(point['place']['location']['lat'], point['place']['location']['lon'])[0]
+                respnd.append([ts, es, poi_label])
+        return json.dumps(respnd)
+            
 
 
+
+def reverseGeocoding(lat, lon):
+    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={0},{1}&key=AIzaSyCExfI5XMCBLPBah6X-_oZj29pqWjaa3Ls".format(
+            lat, lon)
+    jsonStr = requests.get(url).content
+    res = json.loads(jsonStr)
+    addr = res['results'][0]['formatted_address']
+    addr_types = res['results'][0]['types']
+    addr_loc = res['results'][0]['geometry']['location']
+    return addr, addr_loc, addr_types
 
 
 
@@ -202,7 +224,7 @@ def rescuetime_login():
     res = db.execute('select * from rescuetime where uid="{0}";'.format(session['uid']))
     r = res.fetchone()
     if r is None:
-        return rescuetime.authorize(callback= DEVSERVERNAME+"rescuetime_oauth_accept")
+        return rescuetime.authorize(callback= SERVERNAME+"rescuetime_oauth_accept")
     else:
         session['rescuetime_token'] = r[1]
         return json.dumps(r)
@@ -229,13 +251,16 @@ def get_rescuetime_token(token=None):
     return session['rescuetime_token']
 
 
-@app.route("/rescuetime_timechart")
-def rescuetime_timechart():
+@app.route("/rescuetime_timechart/<dateStr>")
+def rescuetime_timechart(dateStr):
+    """
+    dateStr is a string with format 'yyyy-MM-dd'
+    """
     if 'rescuetime_token' not in session:
         return redirect(url_for("rescuetime_login"))
     else:
-        url = "https://www.rescuetime.com/api/oauth/data?access_token={0}&pv=interval&format=json".format(
-            session['rescuetime_token'])
+        url = "https://www.rescuetime.com/api/oauth/data?access_token={0}&pv=interval&format=json&rb={1}&re={1}".format(
+            session['rescuetime_token'], dateStr)
         print url
         response = requests.get(url).json()
         activities = response['rows']
@@ -263,6 +288,37 @@ def rescuetime_timechart():
         return json.dumps(tc)
 
 
+@app.route("/pastweek")
+def pastweek():
+    """
+    Get the date range from request parameters
+    """
+    rb = request.args.get('startDate')
+    re = request.args.get('endDate')
+    url = "https://www.rescuetime.com/api/oauth/productivity_data?access_token={0}&pv=interval&format=json&rb={1}&re={2}&rs=day".format(
+            session['rescuetime_token'], rb, re)
+    response = requests.get(url).json()
+    # generate keys
+    start = datetime.strptime(rb, "%Y-%m-%d")
+    end = datetime.strptime(re, "%Y-%m-%d")
+    step = timedelta(days=1)
+    dateLabels = []
+    timeSeries = []
+    while start <= end:
+        dateLabels.append(start.strftime("%Y-%m-%d"))
+        timeSeries.append([0,0])
+        start += step
+    # fill in times
+    dailyTimes = response["rows"]
+    for row in dailyTimes:
+        date = row[0][0:10]
+        idx = dateLabels.index(date)
+        if row[3] >= 0: # productive time
+            timeSeries[idx][0] += row[1] / 60
+        else: # distractive time
+            timeSeries[idx][1] += row[1] / 60
+    return json.dumps({"dateLabels": dateLabels, "timeSeries": timeSeries})
+
 
 
 """
@@ -280,7 +336,7 @@ def fitbit_login():
     res = db.execute('select * from fitbit where uid="{0}";'.format(session['uid']))
     r = res.fetchone()
     if r is None:
-        return fitbit.authorize(callback= DEVSERVERNAME+"fitbit_oauth_accept")
+        return fitbit.authorize(callback= SERVERNAME+"fitbit_oauth_accept")
     else:
         session["fitbit_token"] = r[1]
         session["fitbit_user_id"] = r[2]
@@ -361,11 +417,20 @@ def refresh_fitbit_token():
     db.commit()
     return resp
     
-    
+
+
+"""
+========================================
+Survey
+1. Update survey data into database
+2. past week line graph
+======================================== 
+"""    
 @app.route("/track_survey", methods=['POST'])
 @requires_auth
 def track_survey():
     print session["uid"], "finished at", strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    now = request.form.get("submit_date")
     # survey questions
     comments = request.form['comments']
     step = request.form.get("step")
@@ -378,8 +443,6 @@ def track_survey():
     other_name = request.form.get("other_name")
     percent_other = request.form.get("percent_other")
     feedback = request.form.get("feedback")
-
-    now = datetime.utcnow()
 
     what_happen = request.form.get('what_happen')
     code = request.form.get("code")
@@ -408,6 +471,36 @@ def track_survey():
 
         db.commit()
         return "Submit successfully. Thank you!"
+    except sqlite3.Error as er:
+        return er.message
+
+
+@app.route("/pastweek_survey")
+@requires_auth
+def past_week_survey_linegraph():
+    rb = request.args.get('startDate')
+    re = request.args.get('endDate')
+
+    start = datetime.strptime(rb, "%Y-%m-%d")
+    end = datetime.strptime(re, "%Y-%m-%d")
+    step = timedelta(days=1)
+    dateLabels = []
+    timeSeries = []
+        
+    try:
+        db = get_db()
+        while start <= end:
+            curDate = start.strftime("%Y-%m-%d")
+            dateLabels.append(curDate)
+            start += step
+            res = db.execute("select percent_academic, percent_social, percent_personal from auto_track_survey where uid=? and submit_date=?", (session['uid'], curDate))
+            r = res.fetchone()
+            if r is None:
+                timeSeries.append([0,0,0])
+            else:
+                timeSeries.append([float(i) if i else 0 for i in r])
+            
+        return json.dumps({"dateLabels": dateLabels, "timeSeries": timeSeries})
     except sqlite3.Error as er:
         return er.message
 
@@ -498,7 +591,7 @@ def track_survey_manual():
     other_name = request.form.get("other_name")
     percent_other = request.form.get("percent_other")
 
-    now = datetime.utcnow()
+    now = request.form.get("submit_date")
 
     what_happen = request.form.get('what_happen')
     code = request.form.get("code")
@@ -548,5 +641,5 @@ def close_db_connection(exception):
 
 
 if __name__ == '__main__':
-    #app.run(debug=True)
+#    app.run(debug=True)
     app.run(host="0.0.0.0", port=8081, debug=True, ssl_context=context)

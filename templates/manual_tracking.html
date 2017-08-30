@@ -1,12 +1,17 @@
 <html>
   <head>
     <title>Life Logger Manual Tracking Survey</title>
+	<link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css") }}>
 	<link rel="stylesheet" href={{ url_for("static", filename="css/homepage_b.css") }}>
     <script src={{ url_for("static", filename="js/jquery.js") }}></script>
+	<script src={{ url_for("static", filename="js/jquery-ui.js") }}></script>
 	<script src={{ url_for("static", filename="js/retrieve_data_b.js") }}></script>
 	<script src={{ url_for("static", filename="js/canvasjs.min.js") }}></script>
   </head>
   <body>
+	<div id=date>
+		<p>Date: <input type="text" id="datepicker"></p>
+	</div>
     <!-- {{ message }} -->
     <div class="container">
 
@@ -29,14 +34,15 @@
     <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
   </ul>
   
+  <form action={{ url_for("track_survey_manual") }} method=post >
+  <input id=submit_date type=hidden name=submit_date value=""/>
   <div id="table">
-  <form action="track_survey" method=post>
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
     <!-- <table id="table" border=”1″ style=”width:300px”> -->
-    <TABLE id="dataTable" width="350px" border="1">
+    <TABLE id="dataTable" width="350px" >
       <tr>
-        <th>What happened?</th>
+        <th width="10%" height="40px">What happened?</th>
         <th>Code</th>
         <th>Time began</th>
         <th>Time ended</th>
@@ -425,8 +431,11 @@
 
       <p>5. What percentage of the time did you:<BR>
         <li>Spend on academic work <input type="text" id="percent_academic" name="percent_academic" <BR> % </li> 
+		
         <li>Spend on leisure/social life activities <input type="text" id="percent_social" name="percent_social" <BR> % </li>
+		
         <li>Spend on personal maintenance <input type="text" id="percent_personal" name="percent_personal" <BR> % </li>
+		
         <li>Other: <input type="text" id="other_name" name="other_name" <BR> (please specify) <input type="text" id="percent_other" name="percent_other" <BR> % </li>
       </p>
       

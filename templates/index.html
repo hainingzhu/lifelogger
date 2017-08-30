@@ -19,7 +19,7 @@
 
 <div id=header>
 	<div id=date>
-		<div id="datepicker"></div>
+		<p>Date: <input type="text" id="datepicker"></p>
 	</div>
 	<div id=loginapp>
 		<a href="rescuetime">
@@ -40,18 +40,15 @@
 <div id=data>
 	<div id=app>
 		<div id=rescuetime>
-			<br><br><br><br><br><br><br>
             <div id=rescuetimechart></div>
 			<div id=rescuetimefootnote>
 				<br><h2>Productive Time:</h2>
-				<p><span class=digits id=phour style="color:#5DADE2"></span> hrs <span class=digits id=pmin style="color:#5DADE2"> </span> mins</p>
-				<br>
+				<p><span class=digits id=phour style="color:#5DADE2"></span> hrs <span class=digits id=pmin style="color:#5DADE2"> </span> mins</p> <br>
 				<h2>Distractive Time:</h2>
 				<p><span class=digits id=dhour style="color:#EF1903"></span> hrs <span class=digits id=dmin style="color:#EF1903"></span> mins</p>
 			</div>
 		</div>
 		<div id=fitbit>
-			<br><br><br><br><br><br><br>
             <div id=fitbitchart></div>
 			<div id=fitbitfootnote>
 				<br><h2>Steps:</h2>
@@ -59,17 +56,18 @@
 			</div>
 		</div>
 		<div id=moves>
-			<br><br><br><br><br><br><br>
             <div id=moveschart></div>
 			<div id=movesfootnote></div>
 		</div>
 	</div>
+	<div id=pastweek-survey></div>
+	<div id=pastweek></div>
 </div>
 
-<div id=survey>
 
-
-  <h2>[Instruction]</h2>
+<div id=rightside>
+	<div id=survey>
+		<h2>[Instruction]</h2>
   <!-- <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p> -->
   
   <ul>
@@ -87,21 +85,24 @@
     <li>Code for <em><u>feeling</u></em>: <em><u>1. Very unhappy, 2. Unhappy, 3. Happy, 4. Very happy</u></em></li>
     <li>Code for <em><u>stress</u></em>: <em><u>1. Very relaxed, 2. Relaxed, 3. Stressed, 4. Very stressed</u></em></li>
   </ul>
+
   
-  <div id="table">
   <form action={{ url_for("track_survey") }} method=post>
+    
+  <div id="table">
 <!--     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table"> -->
-    <!-- <table id="table" border=”1″ style=”width:300px”> -->
-	<TABLE id="dataTable" width="350px" border="1">
-      <tr>
-        <th>What happened?</th>
-        <th>Code</th>
-        <th>Time began</th>
-        <th>Time ended</th>
-        <th>Where?</th>
-        <th>What did you feel?</th>
-        <th>Stress</th>
+<!-- <table id="table" border=”1″ style=”width:300px”> -->
+<input id=submit_date type=hidden name=submit_date value=""/>
+	<TABLE id="dataTable" width="40%">
+     <tr>
+        <th width="10%" height="30px">What happened?</th>
+        <th width="10%">Code</th>
+        <th width="10%">Time began</th>
+        <th width="10%">Time ended</th>
+        <th width="10%">Where?</th>
+        <th width="15%">What did you feel?</th>
+        <th width="15%">Stress</th>
       </tr>
       <tr id=row1>
         <TD><INPUT type="text" name="what_happen"></input></TD>
@@ -453,7 +454,7 @@
 
   <!-- <button id="export-btn" class="btn btn-primary">Add Row</button> -->
   <br>
-  <INPUT type="button" value="Add Row" onclick="addRow()" /> <BR>
+  <INPUT id="button" type="button" value="Add Row" onclick="addRow()" /> <BR>
   
   
   <div class="form-group" id = "comment"> <br>
@@ -492,19 +493,25 @@
   </p>
 
   <p>6. What percentage of the time did you:
-    <li>Spend on academic work <input type="text" id="text" name="text_name" <BR> % </li> 
-    <li>Spend on leisure/social life activities <input type="text" id="text" name="text_name" <BR> % </li>
-    <li>Spend on personal maintenance <input type="text" id="text" name="text_name" <BR> % </li>
-    <li>Other: <input type="text" id="text" name="text_name" <BR> (please specify) <input type="text" id="text" name="text_name" <BR> % </li>
+    <li>Spend on academic work <input type="text" id="text" name="percent_academic" <BR> % </li> 
+	
+    <li>Spend on leisure/social life activities <input type="text" id="text" name="percent_social" <BR> % </li>
+	
+    <li>Spend on personal maintenance <input type="text" id="text" name="percent_personal" <BR> % </li>
+	
+    <li>Other: <input type="text" id="text" name="other_name" <BR> (please specify) <input type="text" id="text" name="percent_other" <BR> % </li>
   </p>
 
   <br>
-  <input type="submit" value="Submit">
+  <input id="button" type="submit" value="Submit">
   </form>
   </div>
   
   <p id="export"></p>
+	</div>
+	
 </div>
+
  
 </body>
 </html>
